@@ -1,0 +1,11 @@
+node_modules/
+dist/
+coverage/
+*.tsbuildinfo
+*.log
+.DS_Store
+
+# credenciales y datos locales: nunca al repositorio
+.env
+.env.*
+*.pem
