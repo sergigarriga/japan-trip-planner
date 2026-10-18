@@ -1,0 +1,48 @@
+import { defineMessages } from "..";
+
+export const m = defineMessages({
+  es: {
+    title: "Buscar",
+    placeholder: "Nara, ramen, teamLab, 21 nov…",
+    aria: "Buscar en el viaje",
+    nothing: (q: string) => `Nada con «${q}». Prueba con un sitio, una comida o una fecha.`,
+    days: "Días",
+    allDays: "Todos los días",
+    stops: "Paradas",
+    phrases: "Frases",
+    day: (n: number) => `Día ${n}`,
+  },
+  ca: {
+    title: "Cerca",
+    placeholder: "Nara, ramen, teamLab, 21 de nov.…",
+    aria: "Cerca al viatge",
+    nothing: (q: string) => `No hi ha res amb «${q}». Prova amb un lloc, un menjar o una data.`,
+    days: "Dies",
+    allDays: "Tots els dies",
+    stops: "Parades",
+    phrases: "Frases",
+    day: (n: number) => `Dia ${n}`,
+  },
+  en: {
+    title: "Search",
+    placeholder: "Nara, ramen, teamLab, 21 Nov…",
+    aria: "Search the trip",
+    nothing: (q: string) => `Nothing for “${q}”. Try a place, a dish or a date.`,
+    days: "Days",
+    allDays: "All days",
+    stops: "Stops",
+    phrases: "Phrases",
+    day: (n: number) => `Day ${n}`,
+  },
+  fr: {
+    title: "Rechercher",
+    placeholder: "Nara, ramen, teamLab, 21 nov.…",
+    aria: "Rechercher dans le voyage",
+    nothing: (q: string) => `Rien pour « ${q} ». Essayez un lieu, un plat ou une date.`,
+    days: "Jours",
+    allDays: "Tous les jours",
+    stops: "Étapes",
+    phrases: "Phrases",
+    day: (n: number) => `Jour ${n}`,
+  },
+});

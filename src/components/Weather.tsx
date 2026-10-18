@@ -1,5 +1,7 @@
 import { useEffect, useMemo, useState } from "react";
 import { DAYS } from "../data/trip";
+import { msg } from "../i18n";
+import { m } from "../i18n/messages/weather";
 import { daysBetween, monthName, storageKey, todayIso } from "../lib";
 import { Icon, type IconName } from "./Icon";
 
@@ -7,14 +9,16 @@ type Wx = { source: "forecast" | "climate"; hi: number; lo: number; code?: numbe
 
 const CACHE_MS = 3 * 3600_000;
 
+/** Icono y texto del código WMO; se evalúa al pintar para usar el idioma actual. */
 function describe(code?: number): { icon: IconName; label: string } {
-  if (code == null) return { icon: "cloud", label: "Media del mes" };
-  if (code === 0) return { icon: "sun", label: "Despejado" };
-  if (code <= 3) return { icon: "cloud", label: "Nubes y claros" };
-  if (code <= 48) return { icon: "fog", label: "Niebla" };
-  if (code <= 67 || (code >= 80 && code <= 82)) return { icon: "rain", label: "Lluvia" };
-  if (code <= 77 || code === 85 || code === 86) return { icon: "snow", label: "Nieve" };
-  return { icon: "storm", label: "Tormenta" };
+  const t = msg(m);
+  if (code == null) return { icon: "cloud", label: t.monthAvg };
+  if (code === 0) return { icon: "sun", label: t.clear };
+  if (code <= 3) return { icon: "cloud", label: t.partly };
+  if (code <= 48) return { icon: "fog", label: t.fog };
+  if (code <= 67 || (code >= 80 && code <= 82)) return { icon: "rain", label: t.rain };
+  if (code <= 77 || code === 85 || code === 86) return { icon: "snow", label: t.snow };
+  return { icon: "storm", label: t.storm };
 }
 
 function readCache(key: string): Wx | undefined {
@@ -77,6 +81,7 @@ function useWeather(date: string, origin: number): Wx {
 
 export function WeatherBadge({ date, origin }: { date: string; origin: number }) {
   const wx = useWeather(date, origin);
+  const t = msg(m);
   const d = describe(wx.code);
   const cold = wx.lo <= 3;
 
@@ -90,9 +95,9 @@ export function WeatherBadge({ date, origin }: { date: string; origin: number })
           {wx.hi}° <span>/ {wx.lo}°</span>
         </strong>
         <small>
-          {wx.source === "forecast" ? d.label : `Media de ${monthName(date)}`}
-          {wx.rain != null && wx.rain >= 30 ? `, lluvia ${wx.rain}%` : ""}
-          {cold ? ", abrigo" : ""}
+          {wx.source === "forecast" ? d.label : t.avgOf(monthName(date))}
+          {wx.rain != null && wx.rain >= 30 ? t.rainPct(wx.rain) : ""}
+          {cold ? t.coat : ""}
         </small>
       </div>
     </div>

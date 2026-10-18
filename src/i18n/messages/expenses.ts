@@ -1,0 +1,83 @@
+import { defineMessages } from "..";
+
+export const m = defineMessages({
+  es: {
+    amount: "Importe en yenes",
+    category: "Categoría",
+    notePlaceholder: "Qué fue (opcional)",
+    whoPaid: "Quién pagó",
+    paidByName: (name: string) => `Pagó ${name}`,
+    forBoth: "Para los dos",
+    add: "Apuntar gasto",
+    meta: (cat: string, name: string, shared: boolean) => `${cat}, pagó ${name}${shared ? "" : " (solo suyo)"}`,
+    remove: "Borrar gasto",
+    dayTotal: "Total del día",
+    title: "Gastos reales",
+    empty:
+      "Todavía no hay gastos. Apuntadlos desde cada día, en la pestaña Gastos, y aquí veréis si vais dentro del presupuesto.",
+    ofBudget: (budget: string) => `por persona de ${budget} previstos`,
+    byDay: "Gasto por día",
+    even: "Estáis en paz: nadie debe nada.",
+    debt: (debtor: string, yen: string, eur: string, creditor: string) =>
+      `${debtor} debe ${yen} (${eur}) a ${creditor}.`,
+  },
+  ca: {
+    amount: "Import en iens",
+    category: "Categoria",
+    notePlaceholder: "Què ha estat (opcional)",
+    whoPaid: "Qui ha pagat",
+    paidByName: (name: string) => `Ha pagat ${name}`,
+    forBoth: "Per als dos",
+    add: "Apunta la despesa",
+    meta: (cat: string, name: string, shared: boolean) => `${cat}, ha pagat ${name}${shared ? "" : " (només seu)"}`,
+    remove: "Esborra la despesa",
+    dayTotal: "Total del dia",
+    title: "Despeses reals",
+    empty:
+      "Encara no hi ha despeses. Apunteu-les des de cada dia, a la pestanya Despeses, i aquí veureu si aneu dins del pressupost.",
+    ofBudget: (budget: string) => `per persona de ${budget} previstos`,
+    byDay: "Despesa per dia",
+    even: "Esteu en pau: ningú no deu res.",
+    debt: (debtor: string, yen: string, eur: string, creditor: string) =>
+      `${debtor} deu ${yen} (${eur}) a ${creditor}.`,
+  },
+  en: {
+    amount: "Amount in yen",
+    category: "Category",
+    notePlaceholder: "What was it? (optional)",
+    whoPaid: "Who paid",
+    paidByName: (name: string) => `${name} paid`,
+    forBoth: "For both",
+    add: "Add expense",
+    meta: (cat: string, name: string, shared: boolean) => `${cat}, paid by ${name}${shared ? "" : " (not shared)"}`,
+    remove: "Delete expense",
+    dayTotal: "Day total",
+    title: "Actual spending",
+    empty:
+      "No expenses yet. Add them from each day, in the Expenses tab, and you’ll see here whether you’re within budget.",
+    ofBudget: (budget: string) => `per person of ${budget} planned`,
+    byDay: "Spending per day",
+    even: "You’re even: nobody owes anything.",
+    debt: (debtor: string, yen: string, eur: string, creditor: string) => `${debtor} owes ${creditor} ${yen} (${eur}).`,
+  },
+  fr: {
+    amount: "Montant en yens",
+    category: "Catégorie",
+    notePlaceholder: "C’était quoi ? (facultatif)",
+    whoPaid: "Qui a payé",
+    paidByName: (name: string) => `${name} a payé`,
+    forBoth: "Pour les deux",
+    add: "Noter la dépense",
+    meta: (cat: string, name: string, shared: boolean) => `${cat}, payé par ${name}${shared ? "" : " (non partagé)"}`,
+    remove: "Supprimer la dépense",
+    dayTotal: "Total du jour",
+    title: "Dépenses réelles",
+    empty:
+      "Aucune dépense pour l’instant. Notez-les depuis chaque jour, dans l’onglet Dépenses, et vous verrez ici si vous respectez le budget.",
+    ofBudget: (budget: string) => `par personne sur ${budget} prévus`,
+    byDay: "Dépenses par jour",
+    even: "Vous êtes quittes : personne ne doit rien.",
+    debt: (debtor: string, yen: string, eur: string, creditor: string) =>
+      `${debtor} doit ${yen} (${eur}) à ${creditor}.`,
+  },
+});

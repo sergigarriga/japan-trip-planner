@@ -1,6 +1,8 @@
 // Tipos y datos derivados del estado editable del viaje.
 
 import { BUDGET, DAYS } from "../data/trip";
+import { msg } from "../i18n";
+import { m } from "../i18n/messages/expenseCats";
 import type { Day, ExpenseCat, FileRef, Stop } from "../types";
 
 export type { ExpenseCat, FileRef };
@@ -35,17 +37,17 @@ export type Reservation = {
 };
 export type StayInfo = { name: string; address: string };
 
-const CAT_LABELS: Record<ExpenseCat, string> = {
-  stay: "Alojamiento",
-  transport: "Transporte",
-  food: "Comida",
-  tickets: "Entradas",
-  shopping: "Compras",
-  other: "Extras",
+const CAT_LABELS: Record<ExpenseCat, () => string> = {
+  stay: () => msg(m).stay,
+  transport: () => msg(m).transport,
+  food: () => msg(m).food,
+  tickets: () => msg(m).tickets,
+  shopping: () => msg(m).shopping,
+  other: () => msg(m).other,
 };
 
-/** Categorías de gasto con su presupuesto por persona, sumado desde BUDGET. */
-export const EXPENSE_CATS: { id: ExpenseCat; label: string; budget: number }[] = (
+/** Categorías de gasto con su presupuesto por persona, sumado desde BUDGET. `label()` sale en el idioma actual. */
+export const EXPENSE_CATS: { id: ExpenseCat; label: () => string; budget: number }[] = (
   Object.keys(CAT_LABELS) as ExpenseCat[]
 ).map((id) => ({
   id,

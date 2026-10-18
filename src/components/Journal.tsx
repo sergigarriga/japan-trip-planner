@@ -2,6 +2,8 @@ import { useState } from "react";
 import type { FileRef } from "../types";
 import { useTrip } from "../state";
 import { useFileUrl } from "../hooks";
+import { msg } from "../i18n";
+import { m } from "../i18n/messages/journal";
 import { FileThumb } from "./FileThumb";
 import { Icon } from "./Icon";
 import { storeFiles } from "../db";
@@ -9,6 +11,7 @@ import { Sheet } from "./Sheet";
 
 export function Journal({ date }: { date: string }) {
   const { notes, setNote, photos, addPhoto, removePhoto, covers, setCover } = useTrip();
+  const t = msg(m);
   const [viewing, setViewing] = useState<FileRef | null>(null);
   const [busy, setBusy] = useState(false);
   const url = useFileUrl(viewing?.id);
@@ -18,17 +21,17 @@ export function Journal({ date }: { date: string }) {
   return (
     <div className="extra">
       <label className="journal__note">
-        <span>Notas del día</span>
+        <span>{t.notes}</span>
         <textarea
           rows={4}
-          placeholder="Qué os ha gustado, dónde comisteis, qué repetiríais…"
+          placeholder={t.notesPlaceholder}
           value={notes[date] ?? ""}
           onChange={(e) => setNote(date, e.target.value)}
         />
       </label>
 
       <div className="journal__photos">
-        <span>Fotos</span>
+        <span>{t.photos}</span>
         <div className="thumbs thumbs--grid">
           {list.map((f) => (
             <div key={f.id} className={`thumb-wrap${covers[date] === f.id ? " is-cover" : ""}`}>
@@ -37,7 +40,7 @@ export function Journal({ date }: { date: string }) {
           ))}
           <label className="thumb thumb--add">
             <Icon name={busy ? "clock" : "camera"} size={22} />
-            <small>{busy ? "Guardando" : "Añadir"}</small>
+            <small>{busy ? t.saving : t.add}</small>
             <input
               type="file"
               accept="image/*"
@@ -52,12 +55,10 @@ export function Journal({ date }: { date: string }) {
             />
           </label>
         </div>
-        <p className="muted journal__hint">
-          Las fotos se guardan solo en este móvil. Marca una como portada para verla en el cartel del día.
-        </p>
+        <p className="muted journal__hint">{t.hint}</p>
       </div>
 
-      <Sheet open={!!viewing} onClose={() => setViewing(null)} title="Foto del día">
+      <Sheet open={!!viewing} onClose={() => setViewing(null)} title={t.photo}>
         {viewing && (
           <>
             {url && <img className="viewer__img" src={url} alt="" />}
@@ -70,11 +71,11 @@ export function Journal({ date }: { date: string }) {
                 }}
               >
                 <Icon name="trash" />
-                Borrar
+                {t.remove}
               </button>
               <button className="btn btn--primary" onClick={() => setCover(date, isCover ? null : viewing.id)}>
                 <Icon name={isCover ? "close" : "check"} />
-                {isCover ? "Quitar de portada" : "Usar de portada"}
+                {isCover ? t.uncover : t.cover}
               </button>
             </div>
           </>

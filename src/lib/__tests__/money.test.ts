@@ -1,7 +1,10 @@
-import { describe, expect, it } from "vitest";
+import { beforeEach, describe, expect, it } from "vitest";
+import { setLang } from "../../i18n";
 import { dayTotal, priceLabel, yen } from "../money";
 
 describe("money", () => {
+  beforeEach(() => setLang("es"));
+
   it("agrupa los miles con punto", () => {
     expect(yen(1200)).toBe("1.200 ¥");
     expect(yen(950)).toBe("950 ¥");
@@ -11,6 +14,14 @@ describe("money", () => {
     expect(priceLabel({ free: true }).main).toBe("Gratis");
     expect(priceLabel({ yen: 5000, yenMax: 8000 }).main).toBe("5.000–8.000 ¥");
     expect(priceLabel({ yen: 1600, note: "por persona" }).sub).toMatch(/por persona$/);
+  });
+
+  it("coloca el símbolo según el idioma", () => {
+    setLang("en");
+    expect(yen(1200)).toBe("¥1,200");
+    expect(priceLabel({ free: true }).main).toBe("Free");
+    setLang("fr");
+    expect(yen(1200)).toMatch(/^1\s200 ¥$/);
   });
 
   it("suma el gasto mínimo del día", () => {

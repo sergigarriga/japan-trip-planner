@@ -1,35 +1,44 @@
 import { useState } from "react";
 import type { Price, StopKind as Kind } from "../types";
 import { newId } from "../db";
+import { msg, tc } from "../i18n";
+import { m } from "../i18n/messages/planEditor";
 import { buzz, shortDate } from "../lib";
 import type { DayContent, PlanDay, PlanStop } from "../state";
 import { useTrip } from "../state";
 import { Icon } from "./Icon";
 import { Sheet } from "./Sheet";
 
-const KINDS: { id: Kind; label: string }[] = [
-  { id: "visit", label: "Visita" },
-  { id: "food", label: "Comida" },
-  { id: "train", label: "Transporte" },
-  { id: "shop", label: "Compras" },
-  { id: "night", label: "Noche" },
-  { id: "stay", label: "Alojamiento" },
-  { id: "logistics", label: "Logística" },
-  { id: "flight", label: "Vuelo" },
+const KINDS: { id: Kind; label: () => string }[] = [
+  { id: "visit", label: () => msg(m).kindVisit },
+  { id: "food", label: () => msg(m).kindFood },
+  { id: "train", label: () => msg(m).kindTrain },
+  { id: "shop", label: () => msg(m).kindShop },
+  { id: "night", label: () => msg(m).kindNight },
+  { id: "stay", label: () => msg(m).kindStay },
+  { id: "logistics", label: () => msg(m).kindLogistics },
+  { id: "flight", label: () => msg(m).kindFlight },
 ];
 
+/** Contenido editable del día, traducido al idioma actual: se edita lo que se ve. */
 function contentOf(d: PlanDay): DayContent {
   return {
     origin: d.origin,
     kanji: d.kanji,
     kana: d.kana,
     romaji: d.romaji,
-    title: d.title,
-    base: d.base,
+    title: tc(d.title),
+    base: tc(d.base),
     route: d.route,
-    tips: d.tips,
-    warning: d.warning,
-    stops: d.stops.map((s) => ({ ...s, prices: s.prices?.map((p) => ({ ...p })) })),
+    tips: d.tips.map((tip) => tc(tip)),
+    warning: tc(d.warning),
+    stops: d.stops.map((s) => ({
+      ...s,
+      time: tc(s.time),
+      title: tc(s.title),
+      detail: tc(s.detail),
+      prices: s.prices?.map((p) => ({ ...p, note: tc(p.note) })),
+    })),
   };
 }
 
@@ -37,8 +46,9 @@ type Props = { day: PlanDay; onClose: () => void };
 
 export function PlanEditor({ day, onClose }: Props) {
   const { days, edited, saveDay, swapDays, resetDay } = useTrip();
+  const t = msg(m);
   const [draft, setDraft] = useState<DayContent>(() => contentOf(day));
-  const [tips, setTips] = useState(day.tips.join("\n"));
+  const [tips, setTips] = useState(() => day.tips.map((tip) => tc(tip)).join("\n"));
   const [swapWith, setSwapWith] = useState<number>(-1);
 
   const setStop = (id: string, patch: Partial<PlanStop>) =>
@@ -61,7 +71,7 @@ export function PlanEditor({ day, onClose }: Props) {
       ...draft,
       tips: tips
         .split("\n")
-        .map((t) => t.trim())
+        .map((line) => line.trim())
         .filter(Boolean),
       warning: draft.warning?.trim() || undefined,
       stops: draft.stops.filter((s) => s.title.trim()),
@@ -71,20 +81,20 @@ export function PlanEditor({ day, onClose }: Props) {
   };
 
   return (
-    <Sheet open onClose={onClose} title={`Editar día ${day.n}`} className="sheet--wide">
+    <Sheet open onClose={onClose} title={t.editDay(day.n)} className="sheet--wide">
       <div className="form editor">
         <div className="form__row">
           <label>
-            <span>Título</span>
+            <span>{t.title}</span>
             <input value={draft.title} onChange={(e) => setDraft({ ...draft, title: e.target.value })} />
           </label>
           <label>
-            <span>Dormís en</span>
+            <span>{t.base}</span>
             <input value={draft.base} onChange={(e) => setDraft({ ...draft, base: e.target.value })} />
           </label>
         </div>
 
-        <h3 className="editor__h">Paradas</h3>
+        <h3 className="editor__h">{t.stops}</h3>
         <ol className="editor__stops">
           {draft.stops.map((s, i) => (
             <li key={s.id} className="editor__stop">
@@ -93,11 +103,11 @@ export function PlanEditor({ day, onClose }: Props) {
                 <select
                   value={s.kind}
                   onChange={(e) => setStop(s.id, { kind: e.target.value as Kind })}
-                  aria-label="Tipo"
+                  aria-label={t.kind}
                 >
                   {KINDS.map((k) => (
                     <option key={k.id} value={k.id}>
-                      {k.label}
+                      {k.label()}
                     </option>
                   ))}
                 </select>
@@ -105,14 +115,14 @@ export function PlanEditor({ day, onClose }: Props) {
                   className="editor__time"
                   value={s.time}
                   onChange={(e) => setStop(s.id, { time: e.target.value })}
-                  placeholder="Mañana"
-                  aria-label="Momento del día"
+                  placeholder={t.timePlaceholder}
+                  aria-label={t.time}
                 />
                 <input
                   type="time"
                   value={s.start ?? ""}
                   onChange={(e) => setStop(s.id, { start: e.target.value || undefined })}
-                  aria-label="Hora de inicio"
+                  aria-label={t.start}
                 />
                 <span className="editor__tools">
                   <button
@@ -120,7 +130,7 @@ export function PlanEditor({ day, onClose }: Props) {
                     className="icon-btn"
                     onClick={() => move(i, -1)}
                     disabled={i === 0}
-                    aria-label="Subir"
+                    aria-label={t.up}
                   >
                     <Icon name="up" size={16} />
                   </button>
@@ -129,7 +139,7 @@ export function PlanEditor({ day, onClose }: Props) {
                     className="icon-btn"
                     onClick={() => move(i, 1)}
                     disabled={i === draft.stops.length - 1}
-                    aria-label="Bajar"
+                    aria-label={t.down}
                   >
                     <Icon name="down" size={16} />
                   </button>
@@ -137,7 +147,7 @@ export function PlanEditor({ day, onClose }: Props) {
                     type="button"
                     className="icon-btn icon-btn--danger"
                     onClick={() => setDraft({ ...draft, stops: draft.stops.filter((x) => x.id !== s.id) })}
-                    aria-label="Borrar parada"
+                    aria-label={t.removeStop}
                   >
                     <Icon name="trash" size={16} />
                   </button>
@@ -147,18 +157,18 @@ export function PlanEditor({ day, onClose }: Props) {
                 className="editor__title"
                 value={s.title}
                 onChange={(e) => setStop(s.id, { title: e.target.value })}
-                placeholder="Qué hacéis"
+                placeholder={t.stopTitle}
               />
               <textarea
                 rows={2}
                 value={s.detail ?? ""}
                 onChange={(e) => setStop(s.id, { detail: e.target.value || undefined })}
-                placeholder="Detalle (opcional)"
+                placeholder={t.detail}
               />
               <input
                 value={s.place ?? ""}
                 onChange={(e) => setStop(s.id, { place: e.target.value || undefined })}
-                placeholder="Lugar para Google Maps (opcional)"
+                placeholder={t.place}
               />
               <div className="editor__prices">
                 {(s.prices ?? []).map((p, j) => (
@@ -169,13 +179,13 @@ export function PlanEditor({ day, onClose }: Props) {
                       disabled={p.free}
                       onChange={(e) => setPrice(s, j, { yen: Number(e.target.value.replace(/\D/g, "")) || undefined })}
                       placeholder="¥"
-                      aria-label="Precio en yenes"
+                      aria-label={t.priceYen}
                     />
                     <input
                       value={p.note ?? ""}
                       onChange={(e) => setPrice(s, j, { note: e.target.value || undefined })}
-                      placeholder="nota"
-                      aria-label="Nota del precio"
+                      placeholder={t.notePlaceholder}
+                      aria-label={t.note}
                     />
                     <label className="check">
                       <input
@@ -183,13 +193,13 @@ export function PlanEditor({ day, onClose }: Props) {
                         checked={!!p.free}
                         onChange={(e) => setPrice(s, j, { free: e.target.checked || undefined })}
                       />
-                      Gratis
+                      {t.free}
                     </label>
                     <button
                       type="button"
                       className="icon-btn"
                       onClick={() => setStop(s.id, { prices: (s.prices ?? []).filter((_, k) => k !== j) })}
-                      aria-label="Quitar precio"
+                      aria-label={t.removePrice}
                     >
                       <Icon name="close" size={14} />
                     </button>
@@ -201,7 +211,7 @@ export function PlanEditor({ day, onClose }: Props) {
                   onClick={() => setStop(s.id, { prices: [...(s.prices ?? []), {}] })}
                 >
                   <Icon name="plus" size={14} />
-                  Añadir precio
+                  {t.addPrice}
                 </button>
               </div>
             </li>
@@ -211,19 +221,22 @@ export function PlanEditor({ day, onClose }: Props) {
           type="button"
           className="btn btn--ghost btn--block"
           onClick={() =>
-            setDraft({ ...draft, stops: [...draft.stops, { id: newId(), time: "Tarde", kind: "visit", title: "" }] })
+            setDraft({
+              ...draft,
+              stops: [...draft.stops, { id: newId(), time: t.newStopTime, kind: "visit", title: "" }],
+            })
           }
         >
           <Icon name="plus" />
-          Añadir parada
+          {t.addStop}
         </button>
 
         <label>
-          <span>A tener en cuenta (uno por línea)</span>
+          <span>{t.tips}</span>
           <textarea rows={4} value={tips} onChange={(e) => setTips(e.target.value)} />
         </label>
         <label>
-          <span>Aviso destacado</span>
+          <span>{t.warning}</span>
           <textarea
             rows={2}
             value={draft.warning ?? ""}
@@ -233,30 +246,24 @@ export function PlanEditor({ day, onClose }: Props) {
 
         <div className="form__actions">
           <button type="button" className="btn btn--ghost" onClick={onClose}>
-            Cancelar
+            {t.cancel}
           </button>
           <button type="button" className="btn btn--primary" onClick={save}>
-            Guardar cambios
+            {t.save}
           </button>
         </div>
 
         <section className="editor__swap">
-          <h3 className="editor__h">Mover el plan a otra fecha</h3>
-          <p className="muted">
-            Intercambia el contenido de este día con otro. Las fechas se quedan, los planes se cruzan.
-          </p>
+          <h3 className="editor__h">{t.swapTitle}</h3>
+          <p className="muted">{t.swapHint}</p>
           <div className="form__row">
-            <select
-              value={swapWith}
-              onChange={(e) => setSwapWith(Number(e.target.value))}
-              aria-label="Día con el que intercambiar"
-            >
-              <option value={-1}>Elige un día</option>
+            <select value={swapWith} onChange={(e) => setSwapWith(Number(e.target.value))} aria-label={t.swapWith}>
+              <option value={-1}>{t.pickDay}</option>
               {days
                 .filter((d) => d.n !== day.n)
                 .map((d) => (
                   <option key={d.n} value={d.n}>
-                    Día {d.n}, {shortDate(d.date)}: {d.title}
+                    {t.dayOption(d.n, shortDate(d.date), tc(d.title))}
                   </option>
                 ))}
             </select>
@@ -271,7 +278,7 @@ export function PlanEditor({ day, onClose }: Props) {
               }}
             >
               <Icon name="swap" />
-              Intercambiar
+              {t.swap}
             </button>
           </div>
           {edited[day.n] && (
@@ -284,7 +291,7 @@ export function PlanEditor({ day, onClose }: Props) {
               }}
             >
               <Icon name="undo" size={14} />
-              Restaurar el plan original de esta fecha
+              {t.reset}
             </button>
           )}
         </section>

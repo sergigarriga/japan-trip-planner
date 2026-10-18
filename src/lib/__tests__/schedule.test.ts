@@ -1,7 +1,10 @@
-import { describe, expect, it } from "vitest";
+import { beforeEach, describe, expect, it } from "vitest";
+import { setLang } from "../../i18n";
 import { fmtMin, stopStarts, toMin } from "../schedule";
 
 describe("schedule", () => {
+  beforeEach(() => setLang("es"));
+
   it("convierte entre HH:MM y minutos", () => {
     expect(toMin("07:30")).toBe(450);
     expect(fmtMin(450)).toBe("07:30");

@@ -1,12 +1,14 @@
 import { useState } from "react";
 import { TRIP } from "../data/trip";
+import { msg } from "../i18n";
+import { m } from "../i18n/messages/expenses";
 import { eur, shortDate, yen, yenToEur } from "../lib";
 import type { ExpenseCat } from "../state";
 import { EXPENSE_CATS, useTrip } from "../state";
 import { Icon } from "./Icon";
 
 const NAMES = TRIP.travellers;
-const catLabel = (id: ExpenseCat) => EXPENSE_CATS.find((c) => c.id === id)!.label;
+const catLabel = (id: ExpenseCat) => EXPENSE_CATS.find((c) => c.id === id)!.label();
 
 export function DayExpenses({ date }: { date: string }) {
   const { expenses, addExpense, removeExpense } = useTrip();
@@ -15,6 +17,7 @@ export function DayExpenses({ date }: { date: string }) {
   const [note, setNote] = useState("");
   const [paidBy, setPaidBy] = useState<0 | 1>(0);
   const [shared, setShared] = useState(true);
+  const t = msg(m);
 
   const list = expenses.filter((e) => e.date === date);
   const total = list.reduce((a, e) => a + e.yen, 0);
@@ -38,12 +41,12 @@ export function DayExpenses({ date }: { date: string }) {
             placeholder="0"
             value={amount}
             onChange={(e) => setAmount(e.target.value)}
-            aria-label="Importe en yenes"
+            aria-label={t.amount}
           />
           <span>¥</span>
-          <small>{value ? eur(yenToEur(value)) : "0 €"}</small>
+          <small>{eur(value ? yenToEur(value) : 0)}</small>
         </div>
-        <div className="chips" role="radiogroup" aria-label="Categoría">
+        <div className="chips" role="radiogroup" aria-label={t.category}>
           {EXPENSE_CATS.map((c) => (
             <button
               type="button"
@@ -53,18 +56,18 @@ export function DayExpenses({ date }: { date: string }) {
               className={`chip-opt${cat === c.id ? " is-on" : ""}`}
               onClick={() => setCat(c.id)}
             >
-              {c.label}
+              {c.label()}
             </button>
           ))}
         </div>
         <input
           className="spend__note"
-          placeholder="Qué fue (opcional)"
+          placeholder={t.notePlaceholder}
           value={note}
           onChange={(e) => setNote(e.target.value)}
         />
         <div className="spend__row">
-          <div className="seg" role="radiogroup" aria-label="Quién pagó">
+          <div className="seg" role="radiogroup" aria-label={t.whoPaid}>
             {NAMES.map((name, i) => (
               <button
                 type="button"
@@ -74,18 +77,18 @@ export function DayExpenses({ date }: { date: string }) {
                 className={paidBy === i ? "is-on" : ""}
                 onClick={() => setPaidBy(i as 0 | 1)}
               >
-                Pagó {name}
+                {t.paidByName(name)}
               </button>
             ))}
           </div>
           <label className="check">
             <input type="checkbox" checked={shared} onChange={(e) => setShared(e.target.checked)} />
-            Para los dos
+            {t.forBoth}
           </label>
         </div>
         <button className="btn btn--primary btn--block" disabled={!value}>
           <Icon name="plus" />
-          Apuntar gasto
+          {t.add}
         </button>
       </form>
 
@@ -96,23 +99,20 @@ export function DayExpenses({ date }: { date: string }) {
               <li key={e.id}>
                 <div>
                   <strong>{e.note || catLabel(e.cat)}</strong>
-                  <small>
-                    {catLabel(e.cat)}, pagó {NAMES[e.paidBy]}
-                    {e.shared ? "" : " (solo suyo)"}
-                  </small>
+                  <small>{t.meta(catLabel(e.cat), NAMES[e.paidBy], e.shared)}</small>
                 </div>
                 <span className="spend-list__amt">
                   {yen(e.yen)}
                   <small>{eur(yenToEur(e.yen))}</small>
                 </span>
-                <button className="icon-btn" onClick={() => removeExpense(e.id)} aria-label="Borrar gasto">
+                <button className="icon-btn" onClick={() => removeExpense(e.id)} aria-label={t.remove}>
                   <Icon name="trash" size={16} />
                 </button>
               </li>
             ))}
           </ul>
           <p className="spend-total">
-            Total del día <strong>{yen(total)}</strong> <span className="muted">({eur(yenToEur(total))})</span>
+            {t.dayTotal} <strong>{yen(total)}</strong> <span className="muted">({eur(yenToEur(total))})</span>
           </p>
         </>
       )}
@@ -123,15 +123,13 @@ export function DayExpenses({ date }: { date: string }) {
 /** Gastos reales frente al presupuesto, por categoría, por día y quién debe a quién. */
 export function ExpenseReport() {
   const { expenses, days } = useTrip();
+  const t = msg(m);
 
   if (expenses.length === 0) {
     return (
       <section className="panel">
-        <h2>Gastos reales</h2>
-        <p className="empty">
-          Todavía no hay gastos. Apuntadlos desde cada día, en la pestaña Gastos, y aquí veréis si vais dentro del
-          presupuesto.
-        </p>
+        <h2>{t.title}</h2>
+        <p className="empty">{t.empty}</p>
       </section>
     );
   }
@@ -149,10 +147,10 @@ export function ExpenseReport() {
 
   return (
     <section className="panel">
-      <h2>Gastos reales</h2>
+      <h2>{t.title}</h2>
       <p className="report__total">
         <strong>{eur(perPerson(total))}</strong>
-        <span className="muted"> por persona de {eur(budget)} previstos</span>
+        <span className="muted"> {t.ofBudget(eur(budget))}</span>
       </p>
       <div className="meter" aria-hidden="true">
         <span style={{ width: `${Math.min(100, (perPerson(total) / budget) * 100)}%` }} />
@@ -166,7 +164,7 @@ export function ExpenseReport() {
           return (
             <li key={c.id} className={over ? "is-over" : ""}>
               <div className="budget__row">
-                <span>{c.label}</span>
+                <span>{c.label()}</span>
                 <b>
                   {eur(real)}
                   {c.budget > 0 && <span className="muted"> / {eur(c.budget)}</span>}
@@ -180,7 +178,7 @@ export function ExpenseReport() {
         })}
       </ul>
 
-      <div className="report__days" aria-label="Gasto por día">
+      <div className="report__days" aria-label={t.byDay}>
         {byDay.map(({ d, yen: y }) => (
           <div key={d.n} className="report__day" data-block={d.block} title={`${shortDate(d.date)}: ${yen(y)}`}>
             <span style={{ height: `${(y / maxDay) * 100}%` }} />
@@ -191,8 +189,8 @@ export function ExpenseReport() {
 
       <p className="report__balance">
         {Math.abs(balance) < 1
-          ? "Estáis en paz: nadie debe nada."
-          : `${debtor} debe ${yen(Math.round(Math.abs(balance)))} (${eur(yenToEur(Math.abs(balance)))}) a ${creditor}.`}
+          ? t.even
+          : t.debt(debtor, yen(Math.round(Math.abs(balance))), eur(yenToEur(Math.abs(balance))), creditor)}
       </p>
     </section>
   );

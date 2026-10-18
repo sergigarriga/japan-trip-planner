@@ -1,6 +1,6 @@
 # 日本 Japan Trip Planner
 
-Guía de viaje a Japón día a día, pensada para llevar en el móvil. Itinerario, mapas, reservas, gastos y frases útiles en una sola web que funciona sin servidor y se adapta a tu viaje editando **un único archivo**.
+Guía de viaje a Japón día a día, pensada para el móvil y cómoda también en el ordenador. Itinerario, mapas, reservas, gastos y frases útiles en una sola web que funciona sin servidor y se adapta a tu viaje editando **un único archivo**.
 
 [![CI](https://github.com/sergigarriga/japan-trip-planner/actions/workflows/ci.yml/badge.svg)](https://github.com/sergigarriga/japan-trip-planner/actions/workflows/ci.yml)
 [![Licencia MIT](https://img.shields.io/badge/licencia-MIT-blue.svg)](LICENSE)
@@ -9,6 +9,8 @@ Guía de viaje a Japón día a día, pensada para llevar en el móvil. Itinerari
 
 ## Qué incluye
 
+- **Cuatro idiomas**: español, català, English y français. Se elige con el selector de la barra superior (o con `?idioma=ca|es|en|fr`) y, la primera vez, sigue el idioma del navegador.
+- **Responsive**: una columna en el móvil y, en pantallas grandes, cartel y línea de días fijos a la izquierda con el detalle a la derecha.
 - **Día a día** con cartel de estación estilo JR, paradas con horario, precios en yenes y euros, ruta en Google Maps y consejos.
 - **Modo viaje**: siguiente parada con cuenta atrás, doble reloj (Japón y casa), conversor de yenes y pantalla siempre encendida.
 - **Calendario del viaje** con los bloques de color, mapa real de la ruta (OpenStreetMap) y alojamientos.
@@ -72,7 +74,10 @@ La web usa rutas relativas, así que funciona igual en GitHub Pages, en un domin
 src/
 ├── data/
 │   ├── trip.ts        ← tu viaje: el único archivo que hace falta editar
-│   └── phrases.ts     frases en japonés y emergencias
+│   └── phrases.ts     frases en japonés (con su significado en los 4 idiomas) y emergencias
+├── i18n/
+│   ├── messages/      textos de la interfaz, un archivo por componente con los 4 idiomas
+│   └── content/       traducciones del contenido de trip.ts (opcional)
 ├── types.ts           modelo de datos del viaje
 ├── components/        vistas y componentes de React
 ├── state/             estado del viaje (plan editado, gastos, reservas…) guardado en el navegador

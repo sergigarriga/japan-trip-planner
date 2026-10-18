@@ -9,6 +9,7 @@ Todo el contenido del viaje está en [`src/data/trip.ts`](../src/data/trip.ts). 
 ```ts
 export const TRIP: TripConfig = {
   id: "japan-trip", // prefijo del almacenamiento local: cámbialo si tienes varias guías en el mismo dominio
+  lang: "es", // idioma en el que escribes los textos de este archivo: es, ca, en o fr
   title: "Japón 2027", // título de la pestaña y del calendario
   titleJa: "日本 2027", // texto de la barra superior
   travellers: ["Alex", "Sam"], // dos personas: los gastos compartidos se reparten a medias
@@ -85,6 +86,25 @@ Importes **por persona** en euros. El campo `cat` (`stay`, `transport`, `food`, 
 ## 8. Frases: `src/data/phrases.ts`
 
 Frases útiles agrupadas por situación y teléfonos de emergencia. Añade o quita las que quieras.
+
+## 9. Idiomas
+
+La interfaz ya está traducida al español, catalán, inglés y francés: no hay que hacer nada. Cada visitante ve la web en el idioma de su navegador (si es uno de los cuatro) y puede cambiarlo con el selector de la barra superior; la elección se recuerda en ese dispositivo. También se puede enlazar a un idioma con `?idioma=en`.
+
+El **contenido** de `trip.ts` lo escribes en un solo idioma, el de `TRIP.lang`. Para mostrarlo traducido en los otros idiomas hay diccionarios en `src/i18n/content/<idioma>.ts`, donde cada clave es un texto exacto de `trip.ts` y el valor, su traducción:
+
+```ts
+const content: Record<string, string> = {
+  "Llegada a Tokio": "Arrival in Tokyo",
+  Mañana: "Morning",
+};
+```
+
+- Los textos sin traducción se muestran tal cual, así que puedes traducir solo lo que quieras.
+- Los diccionarios incluidos traducen el viaje de ejemplo. Si cambias los textos de `trip.ts`, esas entradas dejan de usarse: bórralas o rehaz los diccionarios con tus textos. Si tu guía es para un solo idioma, puedes vaciarlos.
+- Las franjas horarias (`Mañana`, `Morning`, `Matí`, `Matin`…) se reconocen en los cuatro idiomas para calcular la hora de inicio.
+
+Para añadir otro idioma a la interfaz: añádelo a `LANGS`, `LANG_NAMES` y `LOCALES` en `src/i18n/langs.ts`; TypeScript señalará cada archivo de `src/i18n/messages/` y las frases de `phrases.ts` en los que falta su traducción.
 
 ## Comprobar y publicar
 

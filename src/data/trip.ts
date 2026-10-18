@@ -6,6 +6,7 @@ import type { Block, BudgetLine, Day, Flight, Note, Stay, Task, TripConfig } fro
 
 export const TRIP: TripConfig = {
   id: "japan-trip",
+  lang: "es",
   title: "Japón 2027",
   titleJa: "日本 2027",
   travellers: ["Alex", "Sam"],

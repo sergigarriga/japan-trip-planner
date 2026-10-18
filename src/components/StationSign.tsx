@@ -1,6 +1,8 @@
 import { useRef } from "react";
 import { DAYS } from "../data/trip";
 import type { Block } from "../types";
+import { msg } from "../i18n";
+import { m } from "../i18n/messages/stationSign";
 import { longDate } from "../lib";
 import type { PlanDay } from "../state";
 import { DestinationArt } from "./DestinationArt";
@@ -20,6 +22,7 @@ type Props = {
 export function StationSign({ day, block, prev, next, compact, coverId, onGo }: Props) {
   const ref = useRef<HTMLElement>(null);
   const cover = useFileUrl(coverId);
+  const t = msg(m);
 
   // Inclinación 3D suave siguiendo el puntero (solo ratón/trackpad).
   const onMove = (e: React.PointerEvent) => {
@@ -53,7 +56,7 @@ export function StationSign({ day, block, prev, next, compact, coverId, onGo }: 
       )}
 
       <div className="sign__top">
-        <div className="sign__number" aria-label={`Día ${day.n}`}>
+        <div className="sign__number" aria-label={t.day(day.n)}>
           <span>{block.code}</span>
           <strong>{String(day.n).padStart(2, "0")}</strong>
         </div>
@@ -77,7 +80,7 @@ export function StationSign({ day, block, prev, next, compact, coverId, onGo }: 
           className="sign__nav sign__nav--prev"
           onClick={() => prev && onGo(prev.n)}
           disabled={!prev}
-          aria-label={prev ? `Día anterior: ${prev.romaji}` : "Sin día anterior"}
+          aria-label={prev ? t.prev(prev.romaji) : t.noPrev}
         >
           {prev && (
             <>
@@ -90,7 +93,7 @@ export function StationSign({ day, block, prev, next, compact, coverId, onGo }: 
           className="sign__nav sign__nav--next"
           onClick={() => next && onGo(next.n)}
           disabled={!next}
-          aria-label={next ? `Día siguiente: ${next.romaji}` : "Sin día siguiente"}
+          aria-label={next ? t.next(next.romaji) : t.noNext}
         >
           {next && (
             <>

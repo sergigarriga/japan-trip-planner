@@ -1,4 +1,6 @@
 import { useEffect, useRef } from "react";
+import { msg } from "../i18n";
+import { m } from "../i18n/messages/sheet";
 import { Icon } from "./Icon";
 
 type Props = {
@@ -12,6 +14,7 @@ type Props = {
 
 /** Hoja modal (abajo en móvil, centrada en escritorio) sobre <dialog> nativo. */
 export function Sheet({ open, onClose, title, children, variant = "sheet", className = "" }: Props) {
+  const t = msg(m);
   const ref = useRef<HTMLDialogElement>(null);
 
   useEffect(() => {
@@ -49,7 +52,7 @@ export function Sheet({ open, onClose, title, children, variant = "sheet", class
         <div className="sheet__inner">
           <header className="sheet__head">
             <h2>{title}</h2>
-            <button className="icon-btn" onClick={onClose} aria-label="Cerrar">
+            <button className="icon-btn" onClick={onClose} aria-label={t.close}>
               <Icon name="close" />
             </button>
           </header>

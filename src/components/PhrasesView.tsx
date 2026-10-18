@@ -2,6 +2,8 @@ import { useState } from "react";
 import type { Phrase } from "../data/phrases";
 import { EMERGENCY, PHRASE_GROUPS } from "../data/phrases";
 import { STAYS } from "../data/trip";
+import { LANGS, getLang, msg, tc, type Lang } from "../i18n";
+import { m } from "../i18n/messages/phrasesView";
 import { shortDate, speak } from "../lib";
 import { useTrip } from "../state";
 import { Icon } from "./Icon";
@@ -9,8 +11,10 @@ import { Sheet } from "./Sheet";
 
 /** Tarjeta a pantalla completa para enseñar el móvil. */
 export function PhraseCard({ phrase, onClose }: { phrase: (Phrase & { extra?: string }) | null; onClose: () => void }) {
+  const t = msg(m);
+  const lang = getLang();
   return (
-    <Sheet open={!!phrase} onClose={onClose} title={phrase?.es ?? ""} variant="full" className="show">
+    <Sheet open={!!phrase} onClose={onClose} title={phrase?.meaning[lang] ?? ""} variant="full" className="show">
       {phrase && (
         <div className="show__card">
           {phrase.extra && <p className="show__extra">{phrase.extra}</p>}
@@ -18,13 +22,13 @@ export function PhraseCard({ phrase, onClose }: { phrase: (Phrase & { extra?: st
             {phrase.jp}
           </p>
           {phrase.romaji && <p className="show__romaji">{phrase.romaji}</p>}
-          <p className="show__es">{phrase.es}</p>
+          <p className="show__es">{phrase.meaning[lang]}</p>
           <button
             className="btn btn--primary"
             onClick={() => speak(phrase.extra ? `${phrase.extra}。${phrase.jp}` : phrase.jp)}
           >
             <Icon name="speak" />
-            Escuchar
+            {t.listen}
           </button>
         </div>
       )}
@@ -32,17 +36,22 @@ export function PhraseCard({ phrase, onClose }: { phrase: (Phrase & { extra?: st
   );
 }
 
+/** "Llévenos a <hotel>" en los cuatro idiomas: la tarjeta sigue bien si se cambia de idioma con ella abierta. */
+function taxiMeaning(name: string): Record<Lang, string> {
+  return Object.fromEntries(LANGS.map((l) => [l, m[l].taxiTo(name || m[l].ourHotel)])) as Record<Lang, string>;
+}
+
 export function PhrasesView({ onShow }: { onShow: (p: Phrase & { extra?: string }) => void }) {
   const { stays, setStay } = useTrip();
   const [editing, setEditing] = useState<number | null>(null);
+  const t = msg(m);
+  const lang = getLang();
 
   return (
     <div className="phrases">
       <section className="panel">
-        <h2>Para el taxi</h2>
-        <p className="muted">
-          Guarda el nombre y la dirección en japonés de cada hotel (viene en la confirmación de la reserva).
-        </p>
+        <h2>{t.taxiTitle}</h2>
+        <p className="muted">{t.taxiHint}</p>
         <ul className="taxi">
           {STAYS.map((s, i) => {
             const info = stays[i] ?? { name: "", address: "" };
@@ -51,15 +60,13 @@ export function PhrasesView({ onShow }: { onShow: (p: Phrase & { extra?: string 
                 <div className="taxi__head">
                   <span className="taxi__kanji">{s.kanji}</span>
                   <div>
-                    <strong>{info.name || `Hotel ${s.city}`}</strong>
-                    <small>
-                      Desde el {shortDate(s.from)}, {s.nights} {s.nights === 1 ? "noche" : "noches"}
-                    </small>
+                    <strong>{info.name || t.hotel(tc(s.city))}</strong>
+                    <small>{t.since(shortDate(s.from), s.nights)}</small>
                   </div>
                   <button
                     className="icon-btn"
                     onClick={() => setEditing(editing === i ? null : i)}
-                    aria-label="Editar hotel"
+                    aria-label={t.editHotel}
                   >
                     <Icon name="edit" size={16} />
                   </button>
@@ -67,7 +74,7 @@ export function PhrasesView({ onShow }: { onShow: (p: Phrase & { extra?: string 
                 {editing === i ? (
                   <div className="form">
                     <label>
-                      <span>Nombre del hotel</span>
+                      <span>{t.hotelName}</span>
                       <input
                         value={info.name}
                         onChange={(e) => setStay(i, { ...info, name: e.target.value })}
@@ -75,7 +82,7 @@ export function PhrasesView({ onShow }: { onShow: (p: Phrase & { extra?: string 
                       />
                     </label>
                     <label>
-                      <span>Dirección en japonés</span>
+                      <span>{t.address}</span>
                       <textarea
                         rows={2}
                         lang="ja"
@@ -92,12 +99,12 @@ export function PhrasesView({ onShow }: { onShow: (p: Phrase & { extra?: string 
                       onShow({
                         jp: info.address,
                         romaji: "",
-                        es: `Llévenos a ${info.name || "nuestro hotel"}, por favor`,
+                        meaning: taxiMeaning(info.name),
                         extra: "この住所までお願いします",
                       })
                     }
                   >
-                    Enseñar al taxista
+                    {t.showDriver}
                   </button>
                 ) : null}
               </li>
@@ -107,19 +114,19 @@ export function PhrasesView({ onShow }: { onShow: (p: Phrase & { extra?: string 
       </section>
 
       {PHRASE_GROUPS.map((g) => (
-        <section key={g.title} className="panel">
-          <h2>{g.title}</h2>
+        <section key={g.id} className="panel">
+          <h2>{g.title[lang]}</h2>
           <ul className="phrase-list">
             {g.phrases.map((p) => (
               <li key={p.jp}>
                 <button className="phrase" onClick={() => onShow(p)}>
-                  <span className="phrase__es">{p.es}</span>
+                  <span className="phrase__es">{p.meaning[lang]}</span>
                   <span className="phrase__jp" lang="ja">
                     {p.jp}
                   </span>
                   <small>{p.romaji}</small>
                 </button>
-                <button className="icon-btn" onClick={() => speak(p.jp)} aria-label={`Escuchar: ${p.es}`}>
+                <button className="icon-btn" onClick={() => speak(p.jp)} aria-label={t.listenTo(p.meaning[lang])}>
                   <Icon name="speak" size={16} />
                 </button>
               </li>
@@ -129,12 +136,12 @@ export function PhrasesView({ onShow }: { onShow: (p: Phrase & { extra?: string 
       ))}
 
       <section className="panel">
-        <h2>Emergencias</h2>
+        <h2>{t.emergencies}</h2>
         <ul className="sos">
           {EMERGENCY.map((e) => (
             <li key={e.number}>
               <a href={`tel:${e.number.replace(/\D/g, "")}`}>
-                <span>{e.label}</span>
+                <span>{e.label[lang]}</span>
                 <strong>
                   <Icon name="phone" size={16} />
                   {e.number}

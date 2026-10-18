@@ -1,19 +1,19 @@
 import { StrictMode } from "react";
 import { createRoot } from "react-dom/client";
-import App from "./App";
-import { TRIP } from "./data/trip";
+import { syncDocumentLang } from "./i18n";
 import { applyBlockColors } from "./lib";
+import { Root } from "./Root";
 import { TripProvider } from "./state";
 import "leaflet/dist/leaflet.css";
 import "./styles.css";
 
-document.title = TRIP.title;
 applyBlockColors();
+syncDocumentLang();
 
 createRoot(document.getElementById("root")!).render(
   <StrictMode>
     <TripProvider>
-      <App />
+      <Root />
     </TripProvider>
   </StrictMode>,
 );

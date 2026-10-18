@@ -1,18 +1,7 @@
-const WEEKDAYS = ["domingo", "lunes", "martes", "miércoles", "jueves", "viernes", "sábado"];
-const MONTHS = [
-  "enero",
-  "febrero",
-  "marzo",
-  "abril",
-  "mayo",
-  "junio",
-  "julio",
-  "agosto",
-  "septiembre",
-  "octubre",
-  "noviembre",
-  "diciembre",
-];
+import { locale } from "../i18n";
+
+const fmt = (options: Intl.DateTimeFormatOptions) => (d: Date) => new Intl.DateTimeFormat(locale(), options).format(d);
+const capitalize = (s: string) => s.charAt(0).toLocaleUpperCase(locale()) + s.slice(1);
 
 const pad = (n: number) => String(n).padStart(2, "0");
 
@@ -30,26 +19,24 @@ export function todayIso(): string {
   return toIso(new Date());
 }
 
+/** "domingo" en el idioma actual */
 export function weekday(iso: string): string {
-  return WEEKDAYS[parseDate(iso).getDay()];
+  return fmt({ weekday: "long" })(parseDate(iso));
 }
 
-/** "noviembre" */
+/** "noviembre" en el idioma actual */
 export function monthName(iso: string): string {
-  return MONTHS[parseDate(iso).getMonth()];
+  return fmt({ month: "long" })(parseDate(iso));
 }
 
-/** "21 nov" */
+/** "21 nov" en el idioma actual */
 export function shortDate(iso: string): string {
-  const d = parseDate(iso);
-  return `${d.getDate()} ${MONTHS[d.getMonth()].slice(0, 3)}`;
+  return fmt({ day: "numeric", month: "short" })(parseDate(iso)).replace(/\.$/, "");
 }
 
-/** "Domingo 21 de noviembre" */
+/** "Domingo, 21 de noviembre" en el idioma actual */
 export function longDate(iso: string): string {
-  const d = parseDate(iso);
-  const wd = WEEKDAYS[d.getDay()];
-  return `${wd[0].toUpperCase()}${wd.slice(1)} ${d.getDate()} de ${MONTHS[d.getMonth()]}`;
+  return capitalize(fmt({ weekday: "long", day: "numeric", month: "long" })(parseDate(iso)));
 }
 
 export function daysBetween(fromIso: string, toIsoDate: string): number {

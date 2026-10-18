@@ -1,6 +1,8 @@
 import { useEffect, useRef } from "react";
 import L from "leaflet";
 import { DAYS } from "../data/trip";
+import { msg, tc, useLang } from "../i18n";
+import { m } from "../i18n/messages/tripMap";
 import { blockColorVar } from "../lib";
 import { useTrip } from "../state";
 
@@ -11,6 +13,7 @@ export function TripMap({ theme, onOpen }: Props) {
   const ref = useRef<HTMLDivElement>(null);
   const openRef = useRef(onOpen);
   const { days } = useTrip();
+  const lang = useLang();
 
   useEffect(() => {
     openRef.current = onOpen;
@@ -46,6 +49,7 @@ export function TripMap({ theme, onOpen }: Props) {
       }
 
       pts.forEach(({ d, g }) => {
+        const dayLabel = m[lang].day(d.n, tc(d.title));
         const marker = L.marker([g.lat, g.lon], {
           icon: L.divIcon({
             className: "mapdot-wrap",
@@ -54,10 +58,10 @@ export function TripMap({ theme, onOpen }: Props) {
             iconAnchor: [13, 13],
           }),
           keyboard: true,
-          title: `Día ${d.n}: ${d.title}`,
+          title: dayLabel,
         }).addTo(map);
         const label = document.createElement("span");
-        label.textContent = `Día ${d.n}: ${d.title}`; // texto plano: el título es editable
+        label.textContent = dayLabel; // texto plano: el título es editable
         marker.bindTooltip(label, { direction: "top", offset: [0, -12] });
         marker.on("click", () => openRef.current(d.n));
       });
@@ -69,7 +73,7 @@ export function TripMap({ theme, onOpen }: Props) {
       cancelAnimationFrame(frame);
       map.remove();
     };
-  }, [theme, days]);
+  }, [theme, days, lang]);
 
-  return <div ref={ref} className="tripmap" role="application" aria-label="Mapa del viaje" />;
+  return <div ref={ref} className="tripmap" role="application" aria-label={msg(m).aria} />;
 }

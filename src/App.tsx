@@ -2,6 +2,8 @@ import { useEffect, useRef, useState } from "react";
 import { flushSync } from "react-dom";
 import type { Phrase } from "./data/phrases";
 import { BLOCKS, TRIP } from "./data/trip";
+import { LANG_NAMES, LANGS, getLang, isLang, msg, setLang } from "./i18n";
+import { m } from "./i18n/messages/app";
 import { useStored } from "./hooks";
 import { daysBetween, todayIso } from "./lib";
 import { useTrip } from "./state";
@@ -22,23 +24,24 @@ import { Welcome } from "./components/Welcome";
 type Tab = "day" | "month" | "trip" | "tasks" | "phrases";
 type Theme = "sakura" | "anden" | "neon";
 
-const THEMES: { id: Theme; label: string; color: string }[] = [
-  { id: "sakura", label: "Sakura", color: "#fff6f8" },
-  { id: "anden", label: "Andén", color: "#eef0ec" },
-  { id: "neon", label: "Neón", color: "#0e0c18" },
+const THEMES: { id: Theme; label: () => string }[] = [
+  { id: "sakura", label: () => msg(m).themeSakura },
+  { id: "anden", label: () => msg(m).themeAnden },
+  { id: "neon", label: () => msg(m).themeNeon },
 ];
 
 const TABS = [
-  ["day", "Día", "今日"],
-  ["month", "Mes", "月"],
-  ["trip", "Viaje", "旅"],
-  ["tasks", "Tareas", "準備"],
-  ["phrases", "Frases", "話"],
+  ["day", () => msg(m).tabDay, "今日"],
+  ["month", () => msg(m).tabMonth, "月"],
+  ["trip", () => msg(m).tabTrip, "旅"],
+  ["tasks", () => msg(m).tabTasks, "準備"],
+  ["phrases", () => msg(m).tabPhrases, "話"],
 ] as const;
 
 type ViewTransitionDoc = Document & { startViewTransition?: (cb: () => void) => unknown };
 
 export default function App() {
+  const t = msg(m);
   const { days, covers } = useTrip();
   const today = todayIso();
   const todayN = days.find((d) => d.date === today)?.n;
@@ -75,6 +78,8 @@ export default function App() {
     const t = params.get("tema");
     if (THEMES.some((x) => x.id === t)) setTheme(t as Theme);
     if (params.has("viaje")) setTravel(params.get("viaje") === "1");
+    const lang = params.get("idioma");
+    if (isLang(lang)) setLang(lang);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
@@ -85,8 +90,9 @@ export default function App() {
   useEffect(() => {
     const url = new URL(location.href);
     url.searchParams.set("dia", String(n));
+    url.searchParams.set("vista", tab);
     history.replaceState(null, "", url);
-  }, [n]);
+  }, [n, tab]);
 
   const step = (delta: 1 | -1) => {
     const target = days[idx + delta];
@@ -167,33 +173,28 @@ export default function App() {
           <p className="topbar__title">{TRIP.titleJa}</p>
           {countdown > 0 ? (
             <button className="topbar__status" onClick={() => setCountdownOpen(true)}>
-              Faltan {countdown} días
+              {t.daysLeft(countdown)}
             </button>
           ) : (
-            <p className="topbar__status">{todayN != null ? `Hoy es el día ${todayN}` : "Viaje terminado"}</p>
+            <p className="topbar__status">{todayN != null ? t.todayIsDay(todayN) : t.tripOver}</p>
           )}
         </div>
         <div className="topbar__actions">
           <button
             className="pill pill--icon"
             onClick={() => setSearchOpen(true)}
-            aria-label="Buscar (tecla /)"
-            title="Buscar (/)"
+            aria-label={t.search}
+            title={t.searchTitle}
           >
             <Icon name="search" size={16} />
           </button>
-          <button
-            ref={themeBtn}
-            className="pill"
-            onClick={cycleTheme}
-            aria-label={`Tema ${themeInfo.label}. Cambiar tema`}
-          >
+          <button ref={themeBtn} className="pill" onClick={cycleTheme} aria-label={t.theme(themeInfo.label())}>
             <span className="swatch" aria-hidden="true">
               <i />
               <i />
               <i />
             </span>
-            <span className="pill__label">{themeInfo.label}</span>
+            <span className="pill__label">{themeInfo.label()}</span>
           </button>
           <button
             className={`pill pill--travel${travel ? " is-on" : ""}`}
@@ -202,15 +203,32 @@ export default function App() {
             onClick={toggleTravel}
           >
             <span className="pill__dot" aria-hidden="true" />
-            Modo viaje
+            <span className="pill__label">{t.travelMode}</span>
           </button>
+          <label className="pill pill--lang" title={t.language}>
+            <Icon name="globe" size={16} />
+            <span className="pill__code" aria-hidden="true">
+              {getLang().toUpperCase()}
+            </span>
+            <select
+              aria-label={t.language}
+              value={getLang()}
+              onChange={(e) => isLang(e.target.value) && setLang(e.target.value)}
+            >
+              {LANGS.map((l) => (
+                <option key={l} value={l}>
+                  {LANG_NAMES[l]}
+                </option>
+              ))}
+            </select>
+          </label>
         </div>
       </header>
 
       {/* Va aquí (antes del contenido) para poder ser sticky arriba en iPhone; en el resto es fixed abajo. */}
       <nav
         className="tabs"
-        aria-label="Secciones"
+        aria-label={t.sections}
         style={{ "--idx": TABS.findIndex(([id]) => id === tab) } as React.CSSProperties}
       >
         <div className="tabs__inner">
@@ -226,7 +244,7 @@ export default function App() {
               aria-current={tab === id ? "page" : undefined}
             >
               <span className="tabs__jp">{jp}</span>
-              {label}
+              {label()}
             </button>
           ))}
         </div>
@@ -234,17 +252,19 @@ export default function App() {
 
       <main onTouchStart={tab === "day" ? onTouchStart : undefined} onTouchEnd={tab === "day" ? onTouchEnd : undefined}>
         {tab === "day" && (
-          <>
-            <StationSign
-              day={day}
-              block={block}
-              prev={days[idx - 1]}
-              next={days[idx + 1]}
-              compact={travel}
-              coverId={covers[day.date]}
-              onGo={go}
-            />
-            <DayLine selected={n} today={todayN} onSelect={go} />
+          <div className="dayview">
+            <div className="dayview__side">
+              <StationSign
+                day={day}
+                block={block}
+                prev={days[idx - 1]}
+                next={days[idx + 1]}
+                compact={travel}
+                coverId={covers[day.date]}
+                onGo={go}
+              />
+              <DayLine selected={n} today={todayN} onSelect={go} />
+            </div>
             <div className="day-wrap" data-dir={dir ?? undefined} key={`${day.n}-${day.origin}`}>
               <DayView
                 day={day}
@@ -257,7 +277,7 @@ export default function App() {
                 onEdit={() => setEditing(true)}
               />
             </div>
-          </>
+          </div>
         )}
         {tab === "month" && (
           <div className="view-in">

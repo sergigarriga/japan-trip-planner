@@ -1,4 +1,6 @@
 import { useEffect, useRef } from "react";
+import { msg } from "../i18n";
+import { m } from "../i18n/messages/dayLine";
 import { shortDate } from "../lib";
 import { useTrip } from "../state";
 
@@ -8,6 +10,7 @@ type Props = { selected: number; today?: number; onSelect: (n: number) => void }
 export function DayLine({ selected, today, onSelect }: Props) {
   const { days } = useTrip();
   const ref = useRef<HTMLOListElement>(null);
+  const t = msg(m);
 
   useEffect(() => {
     const el = ref.current?.querySelector<HTMLElement>(`[data-n="${selected}"]`);
@@ -15,7 +18,7 @@ export function DayLine({ selected, today, onSelect }: Props) {
   }, [selected]);
 
   return (
-    <nav className="line" aria-label="Días del viaje">
+    <nav className="line" aria-label={t.nav}>
       <ol ref={ref} className="line__track">
         {days.map((d) => {
           const isSel = d.n === selected;
@@ -29,7 +32,7 @@ export function DayLine({ selected, today, onSelect }: Props) {
                 <span className="stop__date">{shortDate(d.date)}</span>
                 <span className="stop__dot" />
                 <span className="stop__kanji">{d.kanji}</span>
-                <span className="stop__n">{d.n === today ? "Hoy" : `Día ${d.n}`}</span>
+                <span className="stop__n">{d.n === today ? t.today : t.day(d.n)}</span>
               </button>
             </li>
           );

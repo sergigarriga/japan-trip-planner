@@ -1,5 +1,7 @@
 // Modelo de datos del viaje. Los datos concretos viven en `src/data/trip.ts`.
 
+import type { Lang } from "./i18n/langs";
+
 /** Precio orientativo por persona. */
 export type Price = {
   yen?: number;
@@ -121,6 +123,8 @@ export type Welcome = { title: string; text: string; wish?: string; sign?: strin
 export type TripConfig = {
   /** identificador corto: prefijo del almacenamiento local y del calendario */
   id: string;
+  /** idioma en el que están escritos los textos de este archivo (las traducciones van en src/i18n/content/) */
+  lang: Lang;
   title: string;
   /** título corto en japonés para la barra superior */
   titleJa: string;

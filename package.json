@@ -2,7 +2,7 @@
   "name": "japan-trip-planner",
   "version": "1.0.0",
   "private": true,
-  "description": "Guía de viaje a Japón día a día: itinerario, mapas, reservas, gastos y frases útiles. Sin servidor y personalizable editando un solo archivo.",
+  "description": "Guía de viaje a Japón día a día en español, catalán, inglés y francés: itinerario, mapas, reservas, gastos y frases útiles. Sin servidor y personalizable editando un solo archivo.",
   "license": "MIT",
   "type": "module",
   "engines": {

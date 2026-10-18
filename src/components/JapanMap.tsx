@@ -1,4 +1,6 @@
 import { DAYS } from "../data/trip";
+import { msg, tc } from "../i18n";
+import { m } from "../i18n/messages/japanMap";
 import { useTrip } from "../state";
 
 // Contornos muy simplificados (lon, lat) de las cuatro islas principales.
@@ -126,6 +128,7 @@ type Props = { progress: number; animate?: boolean };
 /** Mapa ilustrado de Japón: la ruta se ilumina según los días vividos. */
 export function JapanMap({ progress, animate }: Props) {
   const { days } = useTrip();
+  const t = msg(m);
   const pts = days
     .map((d) => ({ d, geo: DAYS[d.origin].geo }))
     .filter(({ geo }) => !geo.abroad)
@@ -133,12 +136,7 @@ export function JapanMap({ progress, animate }: Props) {
   const [w, h] = px(146.2, 30.8);
 
   return (
-    <svg
-      className={`jmap${animate ? " jmap--animate" : ""}`}
-      viewBox={`0 0 ${w} ${h}`}
-      role="img"
-      aria-label="Ruta del viaje por Japón"
-    >
+    <svg className={`jmap${animate ? " jmap--animate" : ""}`} viewBox={`0 0 ${w} ${h}`} role="img" aria-label={t.aria}>
       {ISLANDS.map((isl, i) => (
         <polygon key={i} className="jmap__land" points={isl.map(([lon, lat]) => px(lon, lat).join(",")).join(" ")} />
       ))}
@@ -171,7 +169,7 @@ export function JapanMap({ progress, animate }: Props) {
         const [x, y] = px(l.lon, l.lat);
         return (
           <text key={l.name} className="jmap__label" x={x + l.dx} y={y + l.dy}>
-            {l.name}
+            {tc(l.name)}
           </text>
         );
       })}

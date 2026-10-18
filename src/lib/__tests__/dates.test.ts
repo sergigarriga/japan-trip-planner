@@ -1,11 +1,24 @@
-import { describe, expect, it } from "vitest";
+import { beforeEach, describe, expect, it } from "vitest";
+import { setLang } from "../../i18n";
 import { addDays, daysBetween, longDate, monthName, shortDate, weekdayIndex, zonedTime } from "../dates";
 
 describe("dates", () => {
+  beforeEach(() => setLang("es"));
+
   it("formatea fechas en español sin desfase de zona horaria", () => {
     expect(shortDate("2027-11-21")).toBe("21 nov");
-    expect(longDate("2027-11-21")).toBe("Domingo 21 de noviembre");
+    expect(longDate("2027-11-21")).toBe("Domingo, 21 de noviembre");
     expect(monthName("2027-01-05")).toBe("enero");
+  });
+
+  it("usa el idioma activo", () => {
+    setLang("en");
+    expect(shortDate("2027-11-21")).toBe("21 Nov");
+    expect(longDate("2027-11-21")).toBe("Sunday 21 November");
+    setLang("ca");
+    expect(monthName("2027-11-21")).toBe("novembre");
+    setLang("fr");
+    expect(longDate("2027-11-21")).toBe("Dimanche 21 novembre");
   });
 
   it("suma días y cuenta la distancia entre fechas, cruzando meses", () => {

@@ -1,5 +1,7 @@
-import { useState } from "react";
+import { lazy, Suspense, useState } from "react";
 import { BLOCKS, FLIGHTS, STAYS, TRIP } from "../data/trip";
+import { msg, tc } from "../i18n";
+import { m } from "../i18n/messages/monthView";
 import type { PlanDay } from "../state";
 import {
   addDays,
@@ -16,30 +18,34 @@ import {
 } from "../lib";
 import { useTrip } from "../state";
 import { Icon } from "./Icon";
-import { TripMap } from "./TripMap";
+
+// Leaflet pesa: el mapa se descarga solo al abrir esta vista.
+const TripMap = lazy(() => import("./TripMap").then((mod) => ({ default: mod.TripMap })));
 
 type Props = { selected: number; todayIso: string; theme: string; onOpen: (n: number) => void };
 
 type Marker = "flight" | "train" | "logistics" | "alert";
 
-const MARKER_LABEL: Record<Marker, string> = {
-  flight: "Vuelo",
-  train: "Tren largo",
-  logistics: "Maletas",
-  alert: "Revisar",
+const MARKER_LABEL: Record<Marker, () => string> = {
+  flight: () => msg(m).markerFlight,
+  train: () => msg(m).markerTrain,
+  logistics: () => msg(m).markerLogistics,
+  alert: () => msg(m).markerAlert,
 };
 
-const WEEK = ["L", "M", "X", "J", "V", "S", "D"];
+/** Iniciales de los días de la semana, de lunes a domingo, en el idioma actual. */
+const week = () => msg(m).week.split(" ");
 /** Día en que se aterriza en casa (fuera del plan, se marca en el calendario). */
 const RETURN_ARRIVAL = FLIGHTS[FLIGHTS.length - 1]?.to.date ?? TRIP.end;
 
 function markers(day: PlanDay): Marker[] {
-  const m: Marker[] = [];
-  if (day.stops.some((s) => s.kind === "flight")) m.push("flight");
-  if (day.stops.some((s) => s.kind === "train" && (s.prices ?? []).some((p) => (p.yen ?? 0) >= 5000))) m.push("train");
-  if (day.stops.some((s) => s.kind === "logistics" && /maleta|takkyubin/i.test(s.title))) m.push("logistics");
-  if (day.warning) m.push("alert");
-  return m;
+  const out: Marker[] = [];
+  if (day.stops.some((s) => s.kind === "flight")) out.push("flight");
+  if (day.stops.some((s) => s.kind === "train" && (s.prices ?? []).some((p) => (p.yen ?? 0) >= 5000)))
+    out.push("train");
+  if (day.stops.some((s) => s.kind === "logistics" && /maleta|takkyubin/i.test(s.title))) out.push("logistics");
+  if (day.warning) out.push("alert");
+  return out;
 }
 
 /** Semanas completas (de lunes a domingo) que cubren el viaje. */
@@ -59,6 +65,7 @@ function rangeTitle(first: string, last: string): string {
 
 export function MonthView({ selected, todayIso, theme, onOpen }: Props) {
   const { days: DAYS } = useTrip();
+  const t = msg(m);
   const [preview, setPreview] = useState(selected);
   const previewDay = DAYS.find((d) => d.n === preview) ?? DAYS[1];
   const previewBlock = BLOCKS.find((b) => b.id === previewDay.block)!;
@@ -76,14 +83,12 @@ export function MonthView({ selected, todayIso, theme, onOpen }: Props) {
       <section className="panel month__cal">
         <header className="month__head">
           <h2>{rangeTitle(DAYS[0].date, lastDate)}</h2>
-          <p className="muted">
-            {DAYS.length - 1} días en Japón, {totalNights} noches
-          </p>
+          <p className="muted">{t.summary(DAYS.length - 1, totalNights)}</p>
         </header>
 
-        <div className="cal" role="grid" aria-label="Calendario del viaje">
-          {WEEK.map((w, i) => (
-            <span key={w} className={`cal__wd${i >= 5 ? " is-weekend" : ""}`} role="columnheader">
+        <div className="cal" role="grid" aria-label={t.calendar}>
+          {week().map((w, i) => (
+            <span key={i} className={`cal__wd${i >= 5 ? " is-weekend" : ""}`} role="columnheader">
               {w}
             </span>
           ))}
@@ -115,7 +120,7 @@ export function MonthView({ selected, todayIso, theme, onOpen }: Props) {
               );
             }
 
-            const m = markers(day);
+            const marks = markers(day);
             return (
               <button
                 key={date}
@@ -125,15 +130,15 @@ export function MonthView({ selected, todayIso, theme, onOpen }: Props) {
                 style={{ "--i": i } as React.CSSProperties}
                 onClick={() => setPreview(day.n)}
                 onDoubleClick={() => onOpen(day.n)}
-                aria-label={`${longDate(date)}: ${day.title}`}
+                aria-label={`${longDate(date)}: ${tc(day.title)}`}
                 aria-selected={day.n === preview}
               >
                 <span className={`cal__num${weekend ? " is-weekend" : ""}`}>{d}</span>
                 <span className="cal__kanji">{day.kanji}</span>
-                <span className="cal__title">{day.title}</span>
-                {m.length > 0 && (
+                <span className="cal__title">{tc(day.title)}</span>
+                {marks.length > 0 && (
                   <span className="cal__marks">
-                    {m.map((k) => (
+                    {marks.map((k) => (
                       <span key={k} className={`mk mk--${k}`}>
                         <Icon name={k} size={11} />
                       </span>
@@ -151,7 +156,7 @@ export function MonthView({ selected, todayIso, theme, onOpen }: Props) {
             return (
               <li key={b.id} data-block={b.id}>
                 <span className="legend__sw" />
-                {b.name}
+                {tc(b.name)}
                 <small>
                   {parseDate(ds[0].date).getDate()}–{parseDate(ds[ds.length - 1].date).getDate()}
                 </small>
@@ -165,7 +170,7 @@ export function MonthView({ selected, todayIso, theme, onOpen }: Props) {
               <span className={`mk mk--${k}`}>
                 <Icon name={k} size={11} />
               </span>
-              {MARKER_LABEL[k]}
+              {MARKER_LABEL[k]()}
             </li>
           ))}
         </ul>
@@ -176,22 +181,22 @@ export function MonthView({ selected, todayIso, theme, onOpen }: Props) {
           {previewDay.kanji}
         </span>
         <p className="peek__meta">
-          <span>{previewBlock.name}</span>
-          Día {previewDay.n}, {longDate(previewDay.date).toLowerCase()}
+          <span>{tc(previewBlock.name)}</span>
+          {t.peekDate(previewDay.n, longDate(previewDay.date))}
         </p>
-        <h3 className="peek__title">{previewDay.title}</h3>
+        <h3 className="peek__title">{tc(previewDay.title)}</h3>
         <dl className="peek__facts">
           <div>
-            <dt>Dormís en</dt>
-            <dd>{previewDay.base}</dd>
+            <dt>{t.sleepIn}</dt>
+            <dd>{tc(previewDay.base)}</dd>
           </div>
           <div>
-            <dt>Paradas</dt>
+            <dt>{t.stops}</dt>
             <dd>{previewDay.stops.length}</dd>
           </div>
           {previewTotal > 0 && (
             <div>
-              <dt>Gasto</dt>
+              <dt>{t.spend}</dt>
               <dd>
                 ~{yen(previewTotal)} <span className="muted">({eur(yenToEur(previewTotal))})</span>
               </dd>
@@ -201,34 +206,34 @@ export function MonthView({ selected, todayIso, theme, onOpen }: Props) {
         <ol className="peek__stops">
           {previewDay.stops.slice(0, 4).map((s, i) => (
             <li key={i}>
-              <span>{s.time}</span>
-              {s.title}
+              <span>{tc(s.time)}</span>
+              {tc(s.title)}
             </li>
           ))}
-          {previewDay.stops.length > 4 && <li className="muted">y {previewDay.stops.length - 4} más</li>}
+          {previewDay.stops.length > 4 && <li className="muted">{t.more(previewDay.stops.length - 4)}</li>}
         </ol>
         {previewMarkers.includes("alert") && (
           <p className="peek__warn">
             <Icon name="alert" size={14} />
-            Este día tiene un aviso por revisar.
+            {t.warning}
           </p>
         )}
         <button className="btn btn--primary" onClick={() => onOpen(previewDay.n)}>
-          Abrir día {previewDay.n}
+          {t.open(previewDay.n)}
         </button>
       </article>
 
       <section className="panel">
-        <h2>Mapa del viaje</h2>
-        <p className="muted">Toca un punto para abrir ese día.</p>
-        <TripMap theme={theme} onOpen={onOpen} />
+        <h2>{t.mapTitle}</h2>
+        <p className="muted">{t.mapHint}</p>
+        <Suspense fallback={<div className="tripmap" aria-busy="true" />}>
+          <TripMap theme={theme} onOpen={onOpen} />
+        </Suspense>
       </section>
 
       <section className="panel">
-        <h2>Dónde dormís</h2>
-        <p className="muted">
-          {totalNights} noches, del {shortDate(STAYS[0].from)} al {shortDate(stayEnd)}
-        </p>
+        <h2>{t.staysTitle}</h2>
+        <p className="muted">{t.staysSummary(totalNights, shortDate(STAYS[0].from), shortDate(stayEnd))}</p>
         <div className="stays" aria-hidden="true">
           {STAYS.map((s) => (
             <span
@@ -236,7 +241,7 @@ export function MonthView({ selected, todayIso, theme, onOpen }: Props) {
               className="stays__bar"
               data-block={s.block}
               style={{ flexGrow: s.nights }}
-              title={`${s.city}: ${s.nights} noches`}
+              title={t.stayBar(tc(s.city), s.nights)}
             />
           ))}
         </div>
@@ -244,13 +249,11 @@ export function MonthView({ selected, todayIso, theme, onOpen }: Props) {
           {STAYS.map((s) => (
             <li key={s.from} data-block={s.block}>
               <strong>{s.kanji}</strong>
-              <span>{s.city}</span>
+              <span>{tc(s.city)}</span>
               <small>
                 {parseDate(s.from).getDate()}–{shortDate(addDays(s.from, s.nights))}
               </small>
-              <b>
-                {s.nights} {s.nights === 1 ? "noche" : "noches"}
-              </b>
+              <b>{t.nights(s.nights)}</b>
             </li>
           ))}
         </ul>

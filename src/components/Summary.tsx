@@ -1,5 +1,7 @@
 import { useState } from "react";
 import { TRIP } from "../data/trip";
+import { msg, tc } from "../i18n";
+import { m } from "../i18n/messages/summary";
 import { buzz, daysBetween, eur, todayIso, yenToEur } from "../lib";
 import { useTrip } from "../state";
 import { Icon } from "./Icon";
@@ -8,6 +10,7 @@ import { JapanMap } from "./JapanMap";
 export function Summary({ onCountdown }: { onCountdown: () => void }) {
   const { days, done, expenses, photos } = useTrip();
   const [shared, setShared] = useState(false);
+  const t = msg(m);
   const today = todayIso();
 
   const lived = days.filter((d) => d.n > 0 && d.date <= today);
@@ -21,18 +24,19 @@ export function Summary({ onCountdown }: { onCountdown: () => void }) {
   const before = daysBetween(today, days[0].date) > 0;
 
   const stats = [
-    { v: `${lived.length}/${days.length - 1}`, l: "días vividos" },
-    { v: `${doneStops.length}`, l: `de ${allStops.length} paradas` },
-    { v: `${visits}`, l: "templos y visitas" },
-    { v: `${places}`, l: "lugares" },
-    { v: eur(spent), l: "gastado por persona" },
-    { v: `${photoCount}`, l: "fotos" },
+    { v: `${lived.length}/${days.length - 1}`, l: t.daysLived },
+    { v: `${doneStops.length}`, l: t.ofStops(allStops.length) },
+    { v: `${visits}`, l: t.visits },
+    { v: `${places}`, l: t.places },
+    { v: eur(spent), l: t.spent },
+    { v: `${photoCount}`, l: t.photos },
   ];
 
   const share = async () => {
-    const text = `${TRIP.title}: ${lived.length} días, ${doneStops.length} paradas, ${visits} templos y visitas, ${places} lugares y ${photoCount} fotos.`;
+    const title = tc(TRIP.title);
+    const text = t.shareText(title, lived.length, doneStops.length, visits, places, photoCount);
     try {
-      if (navigator.share) await navigator.share({ title: `Nuestro viaje: ${TRIP.title}`, text });
+      if (navigator.share) await navigator.share({ title: t.shareTitle(title), text });
       else {
         await navigator.clipboard.writeText(text);
         setShared(true);
@@ -47,14 +51,14 @@ export function Summary({ onCountdown }: { onCountdown: () => void }) {
   return (
     <section className="panel summary">
       <div className="summary__head">
-        <h2>{before ? "Vuestro viaje" : "Resumen del viaje"}</h2>
+        <h2>{before ? t.yourTrip : t.tripSummary}</h2>
         {before ? (
           <button className="chip" onClick={onCountdown}>
-            Ver cuenta atrás
+            {t.countdown}
           </button>
         ) : (
           <button className="chip" onClick={share}>
-            <Icon name="share" size={14} /> {shared ? "Copiado" : "Compartir"}
+            <Icon name="share" size={14} /> {shared ? t.copied : t.share}
           </button>
         )}
       </div>

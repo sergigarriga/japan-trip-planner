@@ -37,6 +37,8 @@ const PATHS = {
   file: "M6 3h8l5 5v13H6z M14 3v5h5",
   clock: "M12 3a9 9 0 100 18 9 9 0 000-18z M12 7v5l3 2",
   undo: "M9 14L4 9l5-5 M4 9h10a6 6 0 010 12h-3",
+  globe:
+    "M12 3a9 9 0 100 18 9 9 0 000-18z M3 12h18 M12 3c2.5 2.6 3.8 5.6 3.8 9s-1.3 6.4-3.8 9 M12 3C9.5 5.6 8.2 8.6 8.2 12s1.3 6.4 3.8 9",
 } as const;
 
 export type IconName = keyof typeof PATHS;

@@ -20,8 +20,8 @@ function icsStamp(date: string, min: number): string {
   return icsUtc(new Date(Date.UTC(y, m - 1, d, 0, min) - JST_OFFSET_MS));
 }
 
-/** Calendario .ics con todas las paradas en hora de Japón y aviso 30 minutos antes. */
-export function buildIcs(days: IcsDay[], now = new Date()): string {
+/** Calendario .ics con todas las paradas en hora de Japón y aviso 30 minutos antes; `translate` traduce el contenido. */
+export function buildIcs(days: IcsDay[], translate: (s: string) => string = (s) => s, now = new Date()): string {
   const stamp = icsUtc(now);
   const lines = ["BEGIN:VCALENDAR", "VERSION:2.0", `PRODID:-//${TRIP.id}//ES`, "CALSCALE:GREGORIAN"];
   for (const day of days) {
@@ -35,13 +35,13 @@ export function buildIcs(days: IcsDay[], now = new Date()): string {
         `DTSTAMP:${stamp}`,
         `DTSTART:${icsStamp(day.date, start)}`,
         `DTEND:${icsStamp(day.date, end)}`,
-        `SUMMARY:${icsText(s.title)}`,
+        `SUMMARY:${icsText(translate(s.title))}`,
         ...(s.place ? [`LOCATION:${icsText(s.place)}`] : []),
-        ...(s.detail ? [`DESCRIPTION:${icsText(s.detail)}`] : []),
+        ...(s.detail ? [`DESCRIPTION:${icsText(translate(s.detail))}`] : []),
         "BEGIN:VALARM",
         "TRIGGER:-PT30M",
         "ACTION:DISPLAY",
-        `DESCRIPTION:${icsText(s.title)}`,
+        `DESCRIPTION:${icsText(translate(s.title))}`,
         "END:VALARM",
         "END:VEVENT",
       );

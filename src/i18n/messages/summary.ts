@@ -1,0 +1,68 @@
+import { defineMessages } from "..";
+
+export const m = defineMessages({
+  es: {
+    daysLived: "días vividos",
+    ofStops: (n: number) => `de ${n} paradas`,
+    visits: "templos y visitas",
+    places: "lugares",
+    spent: "gastado por persona",
+    photos: "fotos",
+    shareText: (title: string, days: number, stops: number, visits: number, places: number, photos: number) =>
+      `${title}: ${days} días, ${stops} paradas, ${visits} templos y visitas, ${places} lugares y ${photos} fotos.`,
+    shareTitle: (title: string) => `Nuestro viaje: ${title}`,
+    yourTrip: "Vuestro viaje",
+    tripSummary: "Resumen del viaje",
+    countdown: "Ver cuenta atrás",
+    copied: "Copiado",
+    share: "Compartir",
+  },
+  ca: {
+    daysLived: "dies viscuts",
+    ofStops: (n: number) => `de ${n} parades`,
+    visits: "temples i visites",
+    places: "llocs",
+    spent: "gastat per persona",
+    photos: "fotos",
+    shareText: (title: string, days: number, stops: number, visits: number, places: number, photos: number) =>
+      `${title}: ${days} dies, ${stops} parades, ${visits} temples i visites, ${places} llocs i ${photos} fotos.`,
+    shareTitle: (title: string) => `El nostre viatge: ${title}`,
+    yourTrip: "El vostre viatge",
+    tripSummary: "Resum del viatge",
+    countdown: "Mostra el compte enrere",
+    copied: "Copiat",
+    share: "Comparteix",
+  },
+  en: {
+    daysLived: "days lived",
+    ofStops: (n: number) => `of ${n} stops`,
+    visits: "temples and visits",
+    places: "places",
+    spent: "spent per person",
+    photos: "photos",
+    shareText: (title: string, days: number, stops: number, visits: number, places: number, photos: number) =>
+      `${title}: ${days} days, ${stops} stops, ${visits} temples and visits, ${places} places and ${photos} photos.`,
+    shareTitle: (title: string) => `Our trip: ${title}`,
+    yourTrip: "Your trip",
+    tripSummary: "Trip summary",
+    countdown: "See countdown",
+    copied: "Copied",
+    share: "Share",
+  },
+  fr: {
+    daysLived: "jours vécus",
+    ofStops: (n: number) => `sur ${n} étapes`,
+    visits: "temples et visites",
+    places: "lieux",
+    spent: "dépensés par personne",
+    photos: "photos",
+    shareText: (title: string, days: number, stops: number, visits: number, places: number, photos: number) =>
+      `${title} : ${days} jours, ${stops} étapes, ${visits} temples et visites, ${places} lieux et ${photos} photos.`,
+    shareTitle: (title: string) => `Notre voyage : ${title}`,
+    yourTrip: "Votre voyage",
+    tripSummary: "Bilan du voyage",
+    countdown: "Voir le compte à rebours",
+    copied: "Copié",
+    share: "Partager",
+  },
+});
