@@ -4,10 +4,19 @@ updates:
     directory: /
     schedule:
       interval: monthly
+    # Las versiones mayores suelen requerir cambios de código: se migran a mano.
+    ignore:
+      - dependency-name: "*"
+        update-types: ["version-update:semver-major"]
     groups:
+      dependencies:
+        dependency-type: production
       dev-dependencies:
         dependency-type: development
   - package-ecosystem: github-actions
     directory: /
     schedule:
       interval: monthly
+    groups:
+      actions:
+        patterns: ["*"]
