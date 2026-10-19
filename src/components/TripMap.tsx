@@ -48,14 +48,30 @@ export function TripMap({ theme, onOpen }: Props) {
         ).addTo(map);
       }
 
+      // Los días del mismo lugar (p. ej. varios en Tokio) se abren en círculo para que no se tapen.
+      const NEAR = 0.9; // grados (~90 km): más cerca que esto cuenta como el mismo lugar
+      const clusters: { lat: number; lon: number; days: number[] }[] = [];
+      for (const { d, g } of pts) {
+        const near = clusters.find((c) => Math.hypot(c.lat - g.lat, c.lon - g.lon) < NEAR);
+        if (near) near.days.push(d.n);
+        else clusters.push({ lat: g.lat, lon: g.lon, days: [d.n] });
+      }
+      const groupOf = (n: number) => clusters.find((c) => c.days.includes(n))?.days ?? [n];
+
       pts.forEach(({ d, g }) => {
         const dayLabel = m[lang].day(d.n, tc(d.title));
+        const group = groupOf(d.n);
+        const slot = group.indexOf(d.n);
+        const radius = group.length > 1 ? Math.max(20, (group.length * 34) / (2 * Math.PI)) : 0;
+        const angle = (2 * Math.PI * slot) / group.length - Math.PI / 2;
+        const dx = Math.cos(angle) * radius;
+        const dy = Math.sin(angle) * radius;
         const marker = L.marker([g.lat, g.lon], {
           icon: L.divIcon({
             className: "mapdot-wrap",
             html: `<span class="mapdot" style="--c:${color(d.block)}">${d.n}</span>`,
             iconSize: [26, 26],
-            iconAnchor: [13, 13],
+            iconAnchor: [13 - dx, 13 - dy],
           }),
           keyboard: true,
           title: dayLabel,

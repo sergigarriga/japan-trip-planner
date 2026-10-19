@@ -32,10 +32,12 @@
   --bar-ink: #ffffff;
   --btn-bg: linear-gradient(115deg, #ff5f8f, #a05cff 60%, #5b8cff);
   --btn-ink: #ffffff;
-  --tabs-bg: rgb(43 33 64);
-  --tabs-ink: #ffffff;
-  --tabs-pill: #ffffff;
-  --tabs-pill-ink: #2b2140;
+  --tabs-bg: rgb(255 255 255 / 0.78);
+  --tabs-border: rgb(239 79 125 / 0.22);
+  --tabs-shadow: 0 14px 34px -14px rgb(214 51 108 / 0.45);
+  --tabs-ink: #6b5a85;
+  --tabs-pill: linear-gradient(115deg, #ff5f8f, #a05cff 60%, #5b8cff);
+  --tabs-pill-ink: #ffffff;
   --swatch-1: #ff5f8f;
   --swatch-2: #a05cff;
   --swatch-3: #ffc94a;
@@ -68,10 +70,12 @@
   --bar-ink: #ffffff;
   --btn-bg: #1d2126;
   --btn-ink: #ffffff;
-  --tabs-bg: #1d2126;
-  --tabs-ink: #eef0ec;
-  --tabs-pill: #eef0ec;
-  --tabs-pill-ink: #1d2126;
+  --tabs-bg: #ffffff;
+  --tabs-border: #c9ccc6;
+  --tabs-shadow: 0 12px 28px -16px rgb(20 30 30 / 0.5);
+  --tabs-ink: #676d74;
+  --tabs-pill: #1d2126;
+  --tabs-pill-ink: #ffffff;
   --swatch-1: #3f9b52;
   --swatch-2: #8a4fa6;
   --swatch-3: #e0761a;
@@ -107,10 +111,12 @@
   --bar-ink: #0e0c18;
   --btn-bg: linear-gradient(115deg, #ff4fa3, #7b5cff);
   --btn-ink: #ffffff;
-  --tabs-bg: rgb(23 20 42);
-  --tabs-ink: #f4f0ff;
-  --tabs-pill: #f4f0ff;
-  --tabs-pill-ink: #0e0c18;
+  --tabs-bg: rgb(27 24 48 / 0.82);
+  --tabs-border: rgb(255 255 255 / 0.12);
+  --tabs-shadow: 0 14px 34px -12px rgb(255 79 163 / 0.4);
+  --tabs-ink: #a8a0c6;
+  --tabs-pill: linear-gradient(115deg, #ff4fa3, #7b5cff);
+  --tabs-pill-ink: #ffffff;
   --swatch-1: #ff4fa3;
   --swatch-2: #2ee6c8;
   --swatch-3: #ffb547;
@@ -841,7 +847,11 @@ a {
   border-radius: 999px;
   font-weight: 700;
   font-size: 0.9375rem;
-  white-space: nowrap;
+  /* nunca más ancho que su contenedor: si el texto es largo (otros idiomas), se parte en dos líneas */
+  max-width: 100%;
+  padding-block: 8px;
+  line-height: 1.25;
+  text-align: center;
   text-decoration: none;
   overflow: hidden;
   isolation: isolate;
@@ -1670,6 +1680,7 @@ a {
 
 .trip {
   display: grid;
+  grid-template-columns: minmax(0, 1fr);
   gap: 16px;
 }
 
@@ -2091,8 +2102,10 @@ a {
   z-index: 0;
   border-radius: inherit;
   background: var(--tabs-bg);
-  border: 1px solid rgb(255 255 255 / 0.08);
-  box-shadow: 0 14px 34px -12px rgb(0 0 0 / 0.5);
+  -webkit-backdrop-filter: blur(16px) saturate(1.4);
+  backdrop-filter: blur(16px) saturate(1.4);
+  border: 1px solid var(--tabs-border);
+  box-shadow: var(--tabs-shadow);
   pointer-events: none;
 }
 
@@ -2112,6 +2125,7 @@ a {
   height: calc(100% - 10px);
   border-radius: 999px;
   background: var(--tabs-pill);
+  box-shadow: 0 6px 16px -8px rgb(0 0 0 / 0.45);
   z-index: 1;
   /* el indicador mide lo mismo que una pestaña: se desplaza en múltiplos de su propio ancho */
   transform: translateX(calc(var(--idx) * 100%));
@@ -2134,19 +2148,16 @@ a {
   font-weight: 600;
   font-size: 0.9375rem;
   white-space: nowrap;
-  opacity: 0.72;
-  transition:
-    color 300ms,
-    opacity 200ms;
+  transition: color 300ms;
 }
 
 .tabs__btn:hover {
-  opacity: 1;
+  color: var(--ink);
 }
 
-.tabs__btn.is-active {
+.tabs__btn.is-active,
+.tabs__btn.is-active:hover {
   color: var(--tabs-pill-ink);
-  opacity: 1;
 }
 
 .tabs__jp {
@@ -2160,6 +2171,7 @@ a {
    ========================================================= */
 .month {
   display: grid;
+  grid-template-columns: minmax(0, 1fr);
   gap: 16px;
 }
 
@@ -2195,6 +2207,7 @@ a {
 }
 
 .cal__cell {
+  container-type: inline-size;
   position: relative;
   display: flex;
   flex-direction: column;
@@ -2273,7 +2286,8 @@ a {
 .cal__kanji {
   font-family: var(--jp);
   font-weight: 900;
-  font-size: min(0.8125rem, 2.9vw);
+  /* hasta 3 kanji caben siempre en el ancho de la celda */
+  font-size: min(0.8125rem, calc(100cqi / 3.15));
   letter-spacing: -0.03em;
   line-height: 1.2;
   color: var(--line);
@@ -2450,14 +2464,15 @@ a {
 
 .peek__kanji {
   position: absolute;
-  right: -8px;
-  top: -14px;
+  right: 6px;
+  bottom: -12px;
+  z-index: 0;
   font-family: var(--jp);
   font-weight: 900;
-  font-size: 7rem;
+  font-size: 5.5rem;
   line-height: 1;
   color: var(--line);
-  opacity: 0.1;
+  opacity: 0.09;
   pointer-events: none;
   white-space: nowrap;
 }
@@ -2484,6 +2499,11 @@ a {
   line-height: 1.15;
   margin-top: 4px;
   text-wrap: balance;
+}
+
+.peek > :not(.peek__kanji) {
+  position: relative;
+  z-index: 1;
 }
 
 .peek__facts {
@@ -2564,7 +2584,7 @@ a {
 
 .stays__list li {
   display: grid;
-  grid-template-columns: 3.2em 1fr auto auto;
+  grid-template-columns: 3.2em minmax(0, 1fr) auto auto;
   align-items: baseline;
   gap: 10px;
   padding: 9px 0;
@@ -2595,9 +2615,21 @@ a {
   color: var(--muted);
   font-size: 0.8125rem;
   font-variant-numeric: tabular-nums;
+  white-space: nowrap;
+}
+
+@media (max-width: 400px) {
+  .stays__list li {
+    grid-template-columns: 2.6em minmax(0, 1fr) auto auto;
+    gap: 8px;
+  }
+  .stays__list small {
+    font-size: 0.75rem;
+  }
 }
 
 .stays__list b {
+  white-space: nowrap;
   font-size: 0.875rem;
   font-variant-numeric: tabular-nums;
   min-width: 5.5em;
@@ -2897,7 +2929,7 @@ button.topbar__status:hover {
 .subtabs {
   position: relative;
   display: grid;
-  grid-template-columns: repeat(4, 1fr);
+  grid-template-columns: repeat(4, minmax(0, 1fr));
   margin: 22px 0 4px;
   padding: 4px;
   border-radius: 14px;
@@ -2924,11 +2956,27 @@ button.topbar__status:hover {
   align-items: center;
   justify-content: center;
   gap: 6px;
+  min-width: 0;
   min-height: 40px;
+  padding-inline: 4px;
   font-size: 0.875rem;
   font-weight: 600;
   color: var(--muted);
+  white-space: nowrap;
   transition: color 200ms;
+}
+
+.subtabs button > :first-child {
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+@media (max-width: 400px) {
+  .subtabs button {
+    gap: 3px;
+    font-size: 0.78125rem;
+  }
 }
 
 .subtabs button.is-on {
@@ -4027,6 +4075,7 @@ html.has-full-sheet dialog[open] {
    ========================================================= */
 .phrases {
   display: grid;
+  grid-template-columns: minmax(0, 1fr);
   gap: 16px;
 }
 
@@ -4402,7 +4451,7 @@ html.has-full-sheet dialog[open] {
 
 .summary__body {
   display: grid;
-  grid-template-columns: 1fr;
+  grid-template-columns: minmax(0, 1fr);
   gap: 16px;
   align-items: center;
   margin-top: 12px;
@@ -4410,17 +4459,18 @@ html.has-full-sheet dialog[open] {
 
 @media (min-width: 600px) {
   .summary__body {
-    grid-template-columns: 1fr 1fr;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
   }
 }
 
 .summary .jmap {
+  width: 100%;
   max-width: 280px;
 }
 
 .summary__stats {
   display: grid;
-  grid-template-columns: repeat(2, 1fr);
+  grid-template-columns: repeat(2, minmax(0, 1fr));
   gap: 10px;
   margin: 0;
 }
@@ -4507,7 +4557,7 @@ html.has-full-sheet dialog[open] {
     width: auto;
   }
   .tabs__bg {
-    box-shadow: 0 8px 20px -14px rgb(0 0 0 / 0.45);
+    box-shadow: var(--tabs-shadow);
   }
   .app {
     padding-bottom: calc(32px + env(safe-area-inset-bottom));
@@ -4651,12 +4701,24 @@ html.has-full-sheet dialog[open] {
   /* Mes: calendario y vista previa lado a lado; mapa y alojamientos debajo */
   .month {
     grid-template-columns: minmax(0, 7fr) minmax(0, 5fr);
+    grid-template-areas:
+      "cal peek"
+      "cal stays"
+      "map map";
     align-items: start;
     gap: 24px;
   }
+  .month__cal {
+    grid-area: cal;
+  }
   .month > .peek {
-    position: sticky;
-    top: 84px;
+    grid-area: peek;
+  }
+  .month__stays {
+    grid-area: stays;
+  }
+  .month__map {
+    grid-area: map;
   }
 
   .trip,

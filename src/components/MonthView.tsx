@@ -223,7 +223,7 @@ export function MonthView({ selected, todayIso, theme, onOpen }: Props) {
         </button>
       </article>
 
-      <section className="panel">
+      <section className="panel month__map">
         <h2>{t.mapTitle}</h2>
         <p className="muted">{t.mapHint}</p>
         <Suspense fallback={<div className="tripmap" aria-busy="true" />}>
@@ -231,7 +231,7 @@ export function MonthView({ selected, todayIso, theme, onOpen }: Props) {
         </Suspense>
       </section>
 
-      <section className="panel">
+      <section className="panel month__stays">
         <h2>{t.staysTitle}</h2>
         <p className="muted">{t.staysSummary(totalNights, shortDate(STAYS[0].from), shortDate(stayEnd))}</p>
         <div className="stays" aria-hidden="true">
