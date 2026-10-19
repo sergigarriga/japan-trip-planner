@@ -45,7 +45,7 @@ export const m = defineMessages({
     shareTitle: (title: string) => `Our trip: ${title}`,
     yourTrip: "Your trip",
     tripSummary: "Trip summary",
-    countdown: "See countdown",
+    countdown: "View countdown",
     copied: "Copied",
     share: "Share",
   },

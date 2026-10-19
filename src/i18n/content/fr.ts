@@ -8,7 +8,7 @@ const content: Record<string, string> = {
   "Hiroshima, Miyajima y Alpes": "Hiroshima, Miyajima et les Alpes",
   "Solo mochila de mano": "Sac à dos uniquement",
   "Tokio final": "Tokyo, dernière étape",
-  "Compras y despedida": "Shopping et au revoir",
+  "Compras y despedida": "Shopping et adieux",
   "Vuelos internacionales": "Vols internationaux",
   "Fuera del presupuesto de destino": "Hors budget sur place",
   "Alojamiento (17 noches)": "Hébergement (17 nuits)",
@@ -17,7 +17,7 @@ const content: Record<string, string> = {
   "Shinkansen sueltos vía SmartEX": "Shinkansen à l’unité via SmartEX",
   "Comidas y bebidas": "Repas et boissons",
   "Media de 30 €/día y una cena especial": "Moyenne de 30 €/jour et un dîner d’exception",
-  "Entradas y actividades": "Entrées et activités",
+  "Entradas y actividades": "Billets et activités",
   "DisneySea, Shibuya Sky, teamLab y templos": "DisneySea, Shibuya Sky, teamLab et temples",
   "Transporte local": "Transport local",
   "Suica 4–5 €/día y bus a Shirakawa-go": "Suica 4–5 €/jour et bus pour Shirakawa-go",
@@ -27,8 +27,8 @@ const content: Record<string, string> = {
   "En el avión": "Dans l’avion",
   Madrid: "Madrid",
   "Llegar al aeropuerto": "Arriver à l’aéroport",
-  "3 h antes para facturar con calma.": "3 h avant pour enregistrer les bagages tranquillement.",
-  "Despegue hacia Tokio": "Décollage pour Tokyo",
+  "3 h antes para facturar con calma.": "3 h avant, pour enregistrer les bagages en toute tranquillité.",
+  "Despegue hacia Tokio": "Décollage vers Tokyo",
   "Con escala. Dormir lo que se pueda en el segundo tramo.":
     "Avec escale. Dormir autant que possible sur le second vol.",
   "Pasaportes, tarjeta sin comisiones y adaptador tipo A en el equipaje de mano.":
@@ -46,11 +46,11 @@ const content: Record<string, string> = {
   "Sacar los primeros yenes en un cajero de 7-Eleven.": "Retirer les premiers yens à un distributeur 7-Eleven.",
   "Ramen en Ichiran": "Ramen chez Ichiran",
   "La Suica en el móvil sirve para metro, bus y konbini, y se recarga desde la app.":
-    "La Suica sur le téléphone sert pour le métro, le bus et les konbini, et se recharge depuis l’appli.",
+    "La Suica sur le téléphone fonctionne dans le métro, les bus et les konbini, et se recharge depuis l’appli.",
   "En el cajero elegir cobrar en yenes (rechazar la conversión a euros).":
     "Au distributeur, choisir d’être débité en yens (refuser la conversion en euros).",
   "El N'EX va directo a Tokyo y Shinjuku; el Skyliner a Ueno y Nippori.":
-    "Le N’EX va directement à Tokyo et Shinjuku ; le Skyliner à Ueno et Nippori.",
+    "Le N’EX dessert directement Tokyo et Shinjuku ; le Skyliner, Ueno et Nippori.",
   "Hotel Tokio": "Hôtel Tokyo",
   eSIM: "eSIM",
   "Tokyo DisneySea": "Tokyo DisneySea",
@@ -62,16 +62,16 @@ const content: Record<string, string> = {
   "según el día": "selon le jour",
   "Todo el día": "Toute la journée",
   "Snacks temáticos": "Snacks thématiques",
-  "Bun de gyoza, churros, palomitas de sabores.": "Bun au gyoza, churros, pop-corn aromatisé.",
+  "Bun de gyoza, churros, palomitas de sabores.": "Bun au gyoza, churros, pop-corn aux saveurs variées.",
   Noche: "Soir",
   "Vuelta a Tokio": "Retour à Tokyo",
   "Línea JR Keiyo desde Maihama.": "Ligne JR Keiyo depuis Maihama.",
   "Las entradas se compran online con fecha: en temporada alta se agotan.":
-    "Les billets s’achètent en ligne, datés : en haute saison, ils sont vite épuisés.",
+    "Les billets s’achètent en ligne pour une date précise : en haute saison, ils partent vite.",
   "Escanead cada entrada en la app Tokyo Disney Resort: desde ahí se piden Premier Access, Mobile Order y restaurantes.":
-    "Scannez chaque billet dans l’appli Tokyo Disney Resort : c’est là qu’on réserve Premier Access, Mobile Order et restaurants.",
+    "Scannez chaque billet dans l’appli Tokyo Disney Resort : c’est depuis l’appli qu’on réserve Premier Access, Mobile Order et les restaurants.",
   "Ir directos a Fantasy Springs y Soaring nada más entrar.":
-    "Aller directement à Fantasy Springs et Soaring dès l’entrée.",
+    "Filer directement vers Fantasy Springs et Soaring dès l’entrée.",
   "Entradas DisneySea": "Billets DisneySea",
   "Shibuya, Harajuku y neones": "Shibuya, Harajuku et néons",
   Shibuya: "Shibuya",
@@ -80,7 +80,7 @@ const content: Record<string, string> = {
   "Paseo al sol para resetear el jet lag.": "Balade au soleil pour vaincre le décalage horaire.",
   "Takeshita Street y crepe típico": "Takeshita Street et la crêpe incontournable",
   Mediodía: "Midi",
-  "Udon en Menchirashi o Gyukatsu": "Udon chez Menchirashi ou Gyukatsu",
+  "Udon en Menchirashi o Gyukatsu": "Udon chez Menchirashi ou gyukatsu",
   Tarde: "Après-midi",
   "Hachiko, el cruce y Shibuya Parco": "Hachiko, le carrefour et Shibuya Parco",
   "Tiendas de Nintendo, Pokémon y Jump en Parco.": "Boutiques Nintendo, Pokémon et Jump au Parco.",
@@ -93,9 +93,9 @@ const content: Record<string, string> = {
   "En fin de semana Harajuku y Shibuya están llenos: Meiji Jingu y Takeshita Street, cuanto antes mejor.":
     "Le week-end, Harajuku et Shibuya sont bondés : Meiji Jingu et Takeshita Street, le plus tôt possible.",
   "El sol se pone sobre las 16:30: no llegar tarde a Shibuya Sky.":
-    "Le soleil se couche vers 16:30 : ne pas arriver en retard au Shibuya Sky.",
+    "Le soleil se couche vers 16:30 : ne pas arriver en retard à Shibuya Sky.",
   "En Shibuya Sky las mochilas van a taquillas; no se sube nada suelto a la azotea.":
-    "Au Shibuya Sky, les sacs vont aux casiers ; aucun objet à la main sur le toit-terrasse.",
+    "À Shibuya Sky, les sacs vont dans des casiers ; aucun objet non attaché n’est admis sur le toit-terrasse.",
   "Shibuya Sky": "Shibuya Sky",
   "Excursión al monte Fuji": "Excursion au mont Fuji",
   Kawaguchiko: "Kawaguchiko",
@@ -103,7 +103,7 @@ const content: Record<string, string> = {
   trayecto: "trajet",
   "Pagoda Chureito": "Pagode Chureito",
   "Unos 400 escalones; la vista clásica del Fuji con la pagoda.":
-    "Environ 400 marches ; la vue classique du Fuji avec la pagode.",
+    "Environ 400 marches ; la vue classique du Fuji et de la pagode.",
   "Fideos hōtō en Kawaguchiko": "Nouilles hōtō à Kawaguchiko",
   "Bici eléctrica hasta Oishi Park": "Vélo électrique jusqu’à Oishi Park",
   "Helado de matcha junto al lago.": "Glace au matcha au bord du lac.",
@@ -111,33 +111,33 @@ const content: Record<string, string> = {
   helado: "glace",
   "Regreso a Tokio": "Retour à Tokyo",
   "Mirar la webcam del Fuji por la mañana: con nubes, cambiad este día por otro de Tokio.":
-    "Regarder la webcam du Fuji le matin : s’il y a des nuages, échangez ce jour contre un autre à Tokyo.",
+    "Regarder la webcam du Fuji le matin : si le ciel est couvert, intervertissez cette journée avec une autre journée à Tokyo.",
   "El Fuji Excursion solo tiene plazas reservadas; salen a la venta un mes antes a las 10:00 JST.":
-    "Le Fuji Excursion n’a que des places réservées ; elles sont mises en vente un mois avant à 10:00 JST.",
+    "Le Fuji Excursion ne propose que des places réservées ; elles sont mises en vente un mois à l’avance, à 10:00 JST.",
   "Tren Fuji Excursion": "Train Fuji Excursion",
   "Asakusa y Akihabara": "Asakusa et Akihabara",
   Asakusa: "Asakusa",
   "Templo Senso-ji": "Temple Senso-ji",
-  "Papel de la fortuna (omikuji).": "Papier de bonne fortune (omikuji).",
+  "Papel de la fortuna (omikuji).": "Oracle en papier (omikuji).",
   omikuji: "omikuji",
   "Mirador del centro de turismo": "Terrasse du centre d’information touristique",
   "Planta 8, vistas a Nakamise y la Skytree.": "8e étage, vue sur Nakamise et la Skytree.",
   "Tempura en Asakusa": "Tempura à Asakusa",
-  "Barco por el río Sumida": "Bateau sur la Sumida",
+  "Barco por el río Sumida": "Croisière sur la Sumida",
   Akihabara: "Akihabara",
   "Super Potato, Mandarake y recreativas.": "Super Potato, Mandarake et salles d’arcade.",
   "por partida": "par partie",
   "Kaitenzushi en Sushiro o Kura": "Kaitenzushi chez Sushiro ou Kura",
   "cena total": "dîner (total)",
   "Senso-ji a primera hora (antes de las 8) está casi vacío y con luz bonita.":
-    "Le Senso-ji à la première heure (avant 8 h) est presque vide, avec une belle lumière.",
+    "Tôt le matin (avant 8 h), le Senso-ji est presque désert et la lumière est belle.",
   "Este día cae en lunes: no hay Hokoten (la calle peatonal de Akihabara solo es los domingos). Si queréis pasearla sin coches, intercambiadlo con el del Fuji.":
-    "Ce jour tombe un lundi : pas de Hokoten (la rue piétonne d’Akihabara, c’est seulement le dimanche). Si vous voulez la parcourir sans voitures, échangez-le avec celui du Fuji.",
+    "Ce jour tombe un lundi : pas de Hokoten (la rue d’Akihabara n’est piétonne que le dimanche). Pour la parcourir sans voitures, intervertissez-le avec le jour du Fuji.",
   "Tren a Kioto y Gion": "Train pour Kyoto et Gion",
   "Hotel en Kioto (Karasuma)": "Hôtel à Kyoto (Karasuma)",
   Kioto: "Kyoto",
   "Shinkansen Tokio ➔ Kioto": "Shinkansen Tokyo ➔ Kyoto",
-  "Asiento E (ventana derecha) para ver el Fuji.": "Siège E (fenêtre à droite) pour voir le Fuji.",
+  "Asiento E (ventana derecha) para ver el Fuji.": "Siège E (côté fenêtre, à droite) pour voir le Fuji.",
   SmartEX: "SmartEX",
   "Street food en el mercado Nishiki": "Street food au marché Nishiki",
   "por snack": "par snack",
@@ -145,7 +145,7 @@ const content: Record<string, string> = {
   "Gion y Pontocho": "Gion et Pontocho",
   "Gyozas en Chao Chao": "Gyozas chez Chao Chao",
   "Dejad las maletas en el hotel antes de salir (el check-in suele ser a las 15:00).":
-    "Laissez les valises à l’hôtel avant de sortir (le check-in est souvent à 15:00).",
+    "Laissez vos valises à l’hôtel avant de sortir (le check-in est généralement à 15:00).",
   "En Gion está prohibido fotografiar a geikos en callejones privados.":
     "À Gion, il est interdit de photographier les geikos dans les ruelles privées.",
   "Hotel Kioto": "Hôtel Kyoto",
@@ -161,13 +161,13 @@ const content: Record<string, string> = {
   "Pabellón de Plata (Ginkaku-ji)": "Pavillon d’Argent (Ginkaku-ji)",
   "Bajad por el Camino del Filósofo.": "Redescendez par le Chemin de la Philosophie.",
   "De mediados a finales de noviembre es el pico del momiji: Tofuku-ji se llena desde las 9.":
-    "De mi- à fin novembre, c’est le pic du momiji : le Tofuku-ji est bondé dès 9 h.",
+    "De la mi-novembre à la fin du mois, c’est le pic du momiji : le Tofuku-ji est bondé dès 9 h.",
   "Eikan-do tiene iluminación nocturna en otoño (entrada aparte).":
-    "L’Eikan-do propose des illuminations nocturnes en automne (entrée séparée).",
+    "L’Eikan-do propose des illuminations nocturnes en automne (billet à part).",
   "Arashiyama y Pabellón Dorado": "Arashiyama et Pavillon d’Or",
   Arashiyama: "Arashiyama",
   "Bosque de bambú": "Forêt de bambous",
-  "Antes de las 8 para tenerlo casi solo.": "Avant 8 h pour l’avoir presque pour vous seuls.",
+  "Antes de las 8 para tenerlo casi solo.": "Avant 8 h, pour l’avoir presque pour vous tout seuls.",
   "Otagi Nenbutsu-ji": "Otagi Nenbutsu-ji",
   "1.200 estatuas rakan, cada una con su cara.": "1 200 statues rakan, chacune avec son propre visage.",
   "Fideos soba": "Nouilles soba",
@@ -182,13 +182,13 @@ const content: Record<string, string> = {
   parque: "parc",
   interior: "intérieur",
   "Mercado Kuromon": "Marché Kuromon",
-  "Wagyu en un puesto.": "Wagyu sur un stand.",
+  "Wagyu en un puesto.": "Wagyu sur un étal.",
   "Shinsekai y Amerikamura": "Shinsekai et Amerikamura",
   "Dotonbori: takoyaki y okonomiyaki": "Dotonbori : takoyaki et okonomiyaki",
   takoyaki: "takoyaki",
   okonomiyaki: "okonomiyaki",
   "El último tren cómodo de vuelta a Kioto sale sobre las 23:30 desde Osaka/Umeda.":
-    "Le dernier train pratique pour rentrer à Kyoto part vers 23:30 d’Osaka/Umeda.",
+    "Le dernier train commode pour rentrer à Kyoto part d’Osaka/Umeda vers 23:30.",
   "Nara, Uji y envío de maletas": "Nara, Uji et envoi des valises",
   Nara: "Nara",
   "Tren a Nara": "Train pour Nara",
@@ -217,8 +217,8 @@ const content: Record<string, string> = {
   Miyajima: "Miyajima",
   "Shinkansen Kioto ➔ Hiroshima": "Shinkansen Kyoto ➔ Hiroshima",
   "Museo de la Paz y Cúpula de la Bomba": "Musée de la Paix et Dôme de la bombe atomique",
-  "Okonomiyaki estilo Hiroshima": "Okonomiyaki à la mode d’Hiroshima",
-  "Okonomimura: un edificio entero de puestos.": "Okonomimura : un immeuble entier de stands.",
+  "Okonomiyaki estilo Hiroshima": "Okonomiyaki façon Hiroshima",
+  "Okonomimura: un edificio entero de puestos.": "Okonomimura : un immeuble entier d’échoppes.",
   "Tren y ferry a Miyajima": "Train et ferry pour Miyajima",
   ferry: "ferry",
   "tasa de la isla": "taxe de l’île",
@@ -227,7 +227,7 @@ const content: Record<string, string> = {
   "El ferry JR entra en el JR Pass; con Suica se paga en la máquina.":
     "Le ferry JR est inclus dans le JR Pass ; avec la Suica, on paie à la borne.",
   "Mirad la tabla de mareas: con marea baja se camina hasta el gran torii.":
-    "Consultez la table des marées : à marée basse, on peut marcher jusqu’au grand torii.",
+    "Consultez les horaires des marées : à marée basse, on peut marcher jusqu’au grand torii.",
   "Ryokan Miyajima": "Ryokan Miyajima",
   "Amanecer en Miyajima y tren a Takayama": "Lever du soleil à Miyajima et train pour Takayama",
   "Hotel en Takayama (junto a la estación JR)": "Hôtel à Takayama (près de la gare JR)",
@@ -236,7 +236,7 @@ const content: Record<string, string> = {
   "Gran torii y templo Daisho-in": "Grand torii et temple Daisho-in",
   "Shinkansen Hiroshima ➔ Nagoya": "Shinkansen Hiroshima ➔ Nagoya",
   "Tren panorámico Hida ➔ Takayama": "Train panoramique Hida ➔ Takayama",
-  "Lado derecho: río Hida y gargantas.": "Côté droit : rivière Hida et gorges.",
+  "Lado derecho: río Hida y gargantas.": "Côté droit : la rivière Hida et ses gorges.",
   "Barbacoa de Hida Beef A5": "Barbecue de Hida Beef A5",
   "El gran capricho del viaje.": "La grande folie du voyage.",
   "Reservad la cena de Hida Beef: los locales buenos se llenan.":
@@ -258,9 +258,9 @@ const content: Record<string, string> = {
   "El bus Nohi a Shirakawa-go se reserva online: plazas limitadas.":
     "Le bus Nohi pour Shirakawa-go se réserve en ligne : places limitées.",
   "En el sento hay que ducharse antes de entrar; los tatuajes pueden estar prohibidos.":
-    "Au sento, il faut se doucher avant d’entrer ; les tatouages peuvent être interdits.",
+    "Au sento, il faut se doucher avant d’entrer ; les tatouages sont parfois interdits.",
   "El 23 de noviembre es festivo nacional (Kinrō Kansha no Hi): buses y trenes con más gente. Reservad en cuanto abra la venta.":
-    "Le 23 novembre est un jour férié national (Kinrō Kansha no Hi) : bus et trains plus chargés. Réservez dès l’ouverture des ventes.",
+    "Le 23 novembre est un jour férié national (Kinrō Kansha no Hi) : bus et trains plus bondés. Réservez dès l’ouverture des ventes.",
   "Bus Nohi a Shirakawa-go": "Bus Nohi pour Shirakawa-go",
   "De la montaña a Tokio": "De la montagne à Tokyo",
   "Hotel en Tokio (con las maletas esperando)": "Hôtel à Tokyo (avec les valises qui attendent)",
@@ -279,12 +279,12 @@ const content: Record<string, string> = {
   "Tsukiji, teamLab y Ginza": "Tsukiji, teamLab et Ginza",
   Toyosu: "Toyosu",
   "Mercado exterior de Tsukiji": "Marché extérieur de Tsukiji",
-  "Tamagoyaki y fresa con mochi.": "Tamagoyaki et fraise au mochi.",
+  "Tamagoyaki y fresa con mochi.": "Tamagoyaki et fraise enrobée de mochi.",
   tamagoyaki: "tamagoyaki",
   "ichigo daifuku": "ichigo daifuku",
   "teamLab Planets": "teamLab Planets",
   "Entrada con franja horaria; el QR aparece en la web el mismo día. Se va descalzo y hay agua hasta la rodilla: pantalón que se remangue.":
-    "Entrée sur créneau horaire ; le QR code apparaît sur le site le jour même. On y va pieds nus, avec de l’eau jusqu’aux genoux : prévoyez un pantalon qui se retrousse.",
+    "Billet à créneau horaire ; le QR code s’affiche sur le site le jour même. On marche pieds nus, avec de l’eau jusqu’aux genoux : prévoyez un pantalon facile à retrousser.",
   "precio dinámico": "prix dynamique",
   "Flagships de Ginza": "Boutiques phares de Ginza",
   "Uniqlo, GU e Itoya (papelería).": "Uniqlo, GU et Itoya (papeterie).",
@@ -306,13 +306,13 @@ const content: Record<string, string> = {
     "Ligne Shonan-Shinjuku depuis Shinjuku/Shibuya ou ligne Yokosuka depuis Tokyo, ~1 h avec la Suica.",
   "Hokokuji, el templo del bambú": "Hokokuji, le temple des bambous",
   "Bosque de bambú y matcha en la casa de té. Bus de 10 min desde la estación.":
-    "Forêt de bambous et matcha à la maison de thé. 10 min de bus depuis la gare.",
+    "Forêt de bambous et matcha au salon de thé. 10 min de bus depuis la gare.",
   matcha: "matcha",
   "Tsurugaoka Hachimangu y Komachi-dori": "Tsurugaoka Hachimangu et Komachi-dori",
   "Santuario principal y calle de snacks.": "Sanctuaire principal et rue des snacks.",
   Hasedera: "Hasedera",
   "Arces en su punto a finales de noviembre y vistas a la bahía. Enoden de Kamakura a Hase.":
-    "Érables à leur apogée fin novembre et vue sur la baie. Enoden de Kamakura à Hase.",
+    "Érables à leur apogée fin novembre et vue sur la baie. Enoden de Kamakura jusqu’à Hase.",
   Enoden: "Enoden",
   "Gran Buda (Kotoku-in)": "Grand Bouddha (Kotoku-in)",
   "A 5 min a pie de Hasedera.": "À 5 min à pied du Hasedera.",
@@ -327,7 +327,7 @@ const content: Record<string, string> = {
   "En fin de semana Kamakura se llena: salid pronto. Si la cola del Enoden es larga, a Hase se llega andando en 25 min.":
     "Le week-end, Kamakura est bondée : partez tôt. Si la file pour l’Enoden est longue, Hase est à 25 min à pied.",
   "Tax free: llevar el pasaporte físico y comprar un mínimo de 5.000 ¥ por tienda.":
-    "Détaxe : avoir son passeport physique sur soi et acheter au moins 5 000 ¥ par magasin.",
+    "Détaxe : emportez le passeport physique et dépensez au moins 5 000 ¥ par magasin.",
   "Vuelta a casa": "Retour à la maison",
   Narita: "Narita",
   "Últimas compras en el konbini": "Derniers achats au konbini",
@@ -341,7 +341,7 @@ const content: Record<string, string> = {
   "Gastad las monedas en el konbini: fuera de Japón no se cambian.":
     "Dépensez vos pièces au konbini : hors du Japon, elles ne s’échangent pas.",
   "El saldo de la Suica del móvil no se devuelve: dejadla a cero.":
-    "Le solde de la Suica sur le téléphone n’est pas remboursé : videz-la complètement.",
+    "Le solde de la Suica sur le téléphone n’est pas remboursé : dépensez-le jusqu’au dernier yen.",
   "Tarjeta de embarque de vuelta": "Carte d’embarquement retour",
   Ida: "Aller",
   "Narita T1": "Narita T1",
@@ -355,7 +355,7 @@ const content: Record<string, string> = {
     "Elle s’installe à la maison et s’active en 2 minutes à l’atterrissage, sans faire la queue aux comptoirs.",
   "Trenes con SmartEX": "Trains avec SmartEX",
   "Shinkansen comprados un mes antes desde casa con tarjeta. Reservad ventana para ver el Fuji.":
-    "Shinkansen achetés un mois avant depuis la maison, par carte. Réservez côté fenêtre pour voir le Fuji.",
+    "Shinkansen achetés un mois à l’avance depuis chez vous, par carte. Réservez côté fenêtre pour voir le Fuji.",
   Efectivo: "Espèces",
   "Yenes en cajeros de 7-Eleven con una tarjeta sin comisiones. Elegid siempre cobrar en yenes.":
     "Des yens aux distributeurs 7-Eleven avec une carte sans frais. Choisissez toujours d’être débités en yens.",
@@ -364,15 +364,15 @@ const content: Record<string, string> = {
     "Métro, bus, konbini et casiers. Elle se recharge depuis le téléphone avec la carte bancaire.",
   "Reservar hoteles": "Réserver les hôtels",
   "Kioto en otoño se agota antes. Mejor con cancelación gratuita.":
-    "Kyoto en automne est complet plus tôt. De préférence avec annulation gratuite.",
+    "À Kyoto, en automne, tout part plus vite. Privilégiez l’annulation gratuite.",
   "Contratar seguro de viaje": "Souscrire une assurance voyage",
-  "Gastos médicos altos y anulación del viaje.": "Frais médicaux élevés et annulation du voyage.",
+  "Gastos médicos altos y anulación del viaje.": "Pour couvrir les frais médicaux élevés et l’annulation du voyage.",
   "Comprar entradas DisneySea": "Acheter les billets DisneySea",
-  "Se venden online con fecha.": "Vendus en ligne, datés.",
+  "Se venden online con fecha.": "En vente en ligne, pour une date précise.",
   "Escanear las entradas en la app Tokyo Disney Resort": "Scanner les billets dans l’appli Tokyo Disney Resort",
   "Cada uno en su móvil.": "Chacun sur son téléphone.",
   "Reservar Fuji Excursion (ida y vuelta)": "Réserver le Fuji Excursion (aller-retour)",
-  "Venta un mes antes a las 10:00 JST, en JR East.": "Vente un mois avant à 10:00 JST, sur JR East.",
+  "Venta un mes antes a las 10:00 JST, en JR East.": "Vente un mois à l’avance, à 10:00 JST, sur JR East.",
   "SmartEX: Tokio ➔ Kioto": "SmartEX : Tokyo ➔ Kyoto",
   "Un mes antes. Asiento E para ver el Fuji.": "Un mois avant. Siège E pour voir le Fuji.",
   "SmartEX: Kioto ➔ Hiroshima": "SmartEX : Kyoto ➔ Hiroshima",
@@ -392,7 +392,7 @@ const content: Record<string, string> = {
     "1 bagage cabine + 1 valise en soute (23 kg) par personne",
   "¡Bienvenidos!": "Bienvenue !",
   "Esta es la guía de nuestro viaje a Japón. Cada día encontraréis adónde vamos, qué veremos, las reservas y todo lo que hay que tener en cuenta.":
-    "Voici le guide de notre voyage au Japon. Pour chaque jour, vous trouverez où nous allons, ce que nous verrons, les réservations et tout ce qu’il faut savoir.",
+    "Voici le guide de notre voyage au Japon. Chaque jour, vous y trouverez où nous allons, ce que nous verrons, les réservations et tout ce qu’il faut savoir.",
   "¡Que lo disfrutéis mucho!": "Profitez-en bien !",
   "¡Vamos!": "C’est parti !",
 };

@@ -29,8 +29,8 @@ export const m = defineMessages({
     stay: "Hébergement",
     transport: "Transport",
     food: "Repas",
-    tickets: "Entrées",
+    tickets: "Billets",
     shopping: "Shopping",
-    other: "Extras",
+    other: "Divers",
   },
 });

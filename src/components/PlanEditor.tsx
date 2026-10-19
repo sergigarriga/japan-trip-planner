@@ -5,6 +5,7 @@ import { msg, tc } from "../i18n";
 import { m } from "../i18n/messages/planEditor";
 import { buzz, shortDate } from "../lib";
 import type { DayContent, PlanDay, PlanStop } from "../state";
+import { rawContentOf, restoreOriginals } from "../state/planEdit";
 import { useTrip } from "../state";
 import { Icon } from "./Icon";
 import { Sheet } from "./Sheet";
@@ -67,7 +68,7 @@ export function PlanEditor({ day, onClose }: Props) {
     setStop(s.id, { prices: (s.prices ?? []).map((p, k) => (k === j ? { ...p, ...patch } : p)) });
 
   const save = () => {
-    saveDay(day.n, {
+    const edited = {
       ...draft,
       tips: tips
         .split("\n")
@@ -75,7 +76,10 @@ export function PlanEditor({ day, onClose }: Props) {
         .filter(Boolean),
       warning: draft.warning?.trim() || undefined,
       stops: draft.stops.filter((s) => s.title.trim()),
-    });
+    };
+    const next = restoreOriginals(edited, day);
+    // Sin cambios reales (p. ej. se abrió y guardó en otro idioma): no se marca el día como editado.
+    if (JSON.stringify(next) !== JSON.stringify(rawContentOf(day))) saveDay(day.n, next);
     buzz();
     onClose();
   };
