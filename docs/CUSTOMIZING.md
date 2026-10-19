@@ -106,6 +106,13 @@ const content: Record<string, string> = {
 
 Para añadir otro idioma a la interfaz: añádelo a `LANGS`, `LANG_NAMES` y `LOCALES` en `src/i18n/langs.ts`; TypeScript señalará cada archivo de `src/i18n/messages/` y las frases de `phrases.ts` en los que falta su traducción.
 
+## 10. Iconos, título y vista previa
+
+- **Icono de la app y modo sin conexión:** `public/icon.svg` y los PNG de `public/` (192, 512, maskable, `apple-touch-icon`, `favicon`). Cambia el SVG y vuelve a exportar los PNG con el mismo nombre.
+- **Nombre al instalarla:** sale de `TRIP.title` (se aplica en `vite.config.ts`).
+- **Vista previa al compartir el enlace:** `public/og-image.png` (1200 × 630) y las etiquetas `og:` de `index.html`. Cambia en `index.html` la URL absoluta de `og:image` por la de tu web.
+- **Colores:** los temas están en `src/styles.css`. Si cambias los colores de los bloques (`--c-1` a `--c-4`), mantén el contraste AA (ver [TESTING.md](TESTING.md)).
+
 ## Comprobar y publicar
 
 ```bash

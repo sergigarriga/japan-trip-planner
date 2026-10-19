@@ -9,6 +9,10 @@ npm install
 npm run dev
 ```
 
+## Flujo de trabajo
+
+`main` está protegida: no se hace push directo. Crea una rama (`feat/lo-que-sea`), sube los cambios y abre un pull request. Se fusiona cuando la CI (`check`) está en verde.
+
 ## Antes de abrir un pull request
 
 ```bash
