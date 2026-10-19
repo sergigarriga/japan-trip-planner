@@ -14,7 +14,7 @@ export const m = defineMessages({
     storm: "Tormenta",
     avgOf: (month: string) => `Media de ${month}`,
     rainPct: (pct: number) => `, lluvia ${pct}%`,
-    coat: ", abrigo",
+    coat: ", lleva abrigo",
   },
   ca: {
     monthAvg: "Mitjana del mes",
@@ -26,7 +26,7 @@ export const m = defineMessages({
     storm: "Tempesta",
     avgOf: (month: string) => `Mitjana ${elide(month)}`,
     rainPct: (pct: number) => `, pluja ${pct}%`,
-    coat: ", abric",
+    coat: ", porta abric",
   },
   en: {
     monthAvg: "Monthly average",
@@ -50,6 +50,6 @@ export const m = defineMessages({
     storm: "Orage",
     avgOf: (month: string) => `Moyenne ${elide(month)}`,
     rainPct: (pct: number) => `, pluie ${pct} %`,
-    coat: ", manteau",
+    coat: ", prévoyez un manteau",
   },
 });

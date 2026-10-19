@@ -1,18 +1,22 @@
 import { defineMessages } from "..";
 
-const plural = (one: string, many: string) => (n: number) => `${n} ${n === 1 ? one : many}`;
+/** `zeroIsSingular`: el francés usa el singular con 0 y con 1 ("0 jour"). */
+const plural =
+  (one: string, many: string, zeroIsSingular = false) =>
+  (n: number) =>
+    `${n} ${n === 1 || (zeroIsSingular && n === 0) ? one : many}`;
 
 const es = { nights: plural("noche", "noches"), days: plural("día", "días") };
 const ca = { nights: plural("nit", "nits"), days: plural("dia", "dies") };
 const en = { nights: plural("night", "nights"), days: plural("day", "days") };
-const fr = { nights: plural("nuit", "nuits"), days: plural("jour", "jours") };
+const fr = { nights: plural("nuit", "nuits", true), days: plural("jour", "jours", true) };
 
 export const m = defineMessages({
   es: {
     markerFlight: "Vuelo",
     markerTrain: "Tren largo",
     markerLogistics: "Maletas",
-    markerAlert: "Revisar",
+    markerAlert: "Por revisar",
     /** Iniciales de lunes a domingo, separadas por espacios. */
     week: "L M X J V S D",
     summary: (days: number, nights: number) => `${es.days(days)} en Japón, ${es.nights(nights)}`,
@@ -62,9 +66,9 @@ export const m = defineMessages({
     summary: (days: number, nights: number) => `${en.days(days)} in Japan, ${en.nights(nights)}`,
     calendar: "Trip calendar",
     peekDate: (n: number, date: string) => `Day ${n}, ${date}`,
-    sleepIn: "Sleeping in",
+    sleepIn: "Staying in",
     stops: "Stops",
-    spend: "Spend",
+    spend: "Spending",
     more: (n: number) => `and ${n} more`,
     warning: "This day has a warning to check.",
     open: (n: number) => `Open day ${n}`,
@@ -87,7 +91,7 @@ export const m = defineMessages({
     sleepIn: "Vous dormez à",
     stops: "Étapes",
     spend: "Dépense",
-    more: (n: number) => `et ${n} de plus`,
+    more: (n: number) => `et ${n} autres`,
     warning: "Ce jour comporte un avertissement à vérifier.",
     open: (n: number) => `Ouvrir le jour ${n}`,
     mapTitle: "Carte du voyage",
@@ -95,6 +99,6 @@ export const m = defineMessages({
     staysTitle: "Où vous dormez",
     staysSummary: (nights: number, from: string, to: string) => `${fr.nights(nights)}, du ${from} au ${to}`,
     nights: fr.nights,
-    stayBar: (city: string, nights: number) => `${city} : ${fr.nights(nights)}`,
+    stayBar: (city: string, nights: number) => `${city}\u00a0: ${fr.nights(nights)}`,
   },
 });

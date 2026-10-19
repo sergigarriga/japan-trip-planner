@@ -22,7 +22,7 @@ export const m = defineMessages({
     listen: "Escolta",
     listenTo: (text: string) => `Escolta: ${text}`,
     taxiTitle: "Per al taxi",
-    taxiHint: "Desa el nom i l’adreça en japonès de cada hotel (surt a la confirmació de la reserva).",
+    taxiHint: "Desa el nom i l’adreça en japonès de cada hotel (consta a la confirmació de la reserva).",
     hotel: (city: string) => `Hotel ${city}`,
     since: (date: string, nights: number) => `Des del ${date}, ${plural("nit", "nits")(nights)}`,
     editHotel: "Edita l’hotel",

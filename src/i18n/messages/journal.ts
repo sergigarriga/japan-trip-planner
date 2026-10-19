@@ -3,7 +3,7 @@ import { defineMessages } from "..";
 export const m = defineMessages({
   es: {
     notes: "Notas del día",
-    notesPlaceholder: "Qué os ha gustado, dónde comisteis, qué repetiríais…",
+    notesPlaceholder: "Qué os gustó, dónde comisteis, qué repetiríais…",
     photos: "Fotos",
     saving: "Guardando",
     add: "Añadir",
@@ -46,7 +46,7 @@ export const m = defineMessages({
     hint: "Les photos sont enregistrées uniquement sur ce téléphone. Choisissez-en une comme couverture pour la voir sur l’affiche du jour.",
     photo: "Photo du jour",
     remove: "Supprimer",
-    uncover: "Retirer de la couverture",
-    cover: "Mettre en couverture",
+    uncover: "Retirer la couverture",
+    cover: "Choisir comme couverture",
   },
 });

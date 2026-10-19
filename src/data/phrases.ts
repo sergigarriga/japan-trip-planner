@@ -159,7 +159,7 @@ export const PHRASE_GROUPS: PhraseGroup[] = [
         meaning: {
           es: "¿Puedo comprar tax free?",
           ca: "Puc comprar tax free?",
-          en: "Can I buy it tax-free?",
+          en: "Can I buy this tax-free?",
           fr: "Puis-je acheter en détaxe ?",
         },
       },

@@ -49,7 +49,7 @@ const content: Record<string, string> = {
   "En el cajero elegir cobrar en yenes (rechazar la conversión a euros).":
     "Al caixer, trieu cobrar en iens (rebutgeu la conversió a euros).",
   "El N'EX va directo a Tokyo y Shinjuku; el Skyliner a Ueno y Nippori.":
-    "El N'EX va directe a Tokyo i Shinjuku; l'Skyliner, a Ueno i Nippori.",
+    "El N'EX va directe a Tokyo i Shinjuku; el Skyliner, a Ueno i Nippori.",
   "Hotel Tokio": "Hotel Tòquio",
   eSIM: "eSIM",
   "Tokyo DisneySea": "Tokyo DisneySea",
@@ -61,7 +61,7 @@ const content: Record<string, string> = {
   "según el día": "segons el dia",
   "Todo el día": "Tot el dia",
   "Snacks temáticos": "Snacks temàtics",
-  "Bun de gyoza, churros, palomitas de sabores.": "Bun de gyoza, xurros, crispetes de gustos.",
+  "Bun de gyoza, churros, palomitas de sabores.": "Bun de gyoza, xurros, crispetes de sabors.",
   Noche: "Nit",
   "Vuelta a Tokio": "Tornada a Tòquio",
   "Línea JR Keiyo desde Maihama.": "Línia JR Keiyo des de Maihama.",
@@ -76,7 +76,7 @@ const content: Record<string, string> = {
   Shibuya: "Shibuya",
   Mañana: "Matí",
   "Santuario Meiji Jingu": "Santuari Meiji Jingu",
-  "Paseo al sol para resetear el jet lag.": "Passeig al sol per reiniciar el jet lag.",
+  "Paseo al sol para resetear el jet lag.": "Passeig al sol per combatre el jet lag.",
   "Takeshita Street y crepe típico": "Takeshita Street i la típica crep",
   Mediodía: "Migdia",
   "Udon en Menchirashi o Gyukatsu": "Udon a Menchirashi o Gyukatsu",
@@ -90,7 +90,7 @@ const content: Record<string, string> = {
   "Omoide Yokocho y yakitori": "Omoide Yokocho i yakitori",
   "por plato": "per plat",
   "En fin de semana Harajuku y Shibuya están llenos: Meiji Jingu y Takeshita Street, cuanto antes mejor.":
-    "El cap de setmana Harajuku i Shibuya són plens: Meiji Jingu i Takeshita Street, com més aviat millor.",
+    "Els caps de setmana Harajuku i Shibuya estan plens: Meiji Jingu i Takeshita Street, com més aviat millor.",
   "El sol se pone sobre las 16:30: no llegar tarde a Shibuya Sky.":
     "El sol es pon cap a les 16:30: no arribeu tard a Shibuya Sky.",
   "En Shibuya Sky las mochilas van a taquillas; no se sube nada suelto a la azotea.":
@@ -131,7 +131,7 @@ const content: Record<string, string> = {
   "Senso-ji a primera hora (antes de las 8) está casi vacío y con luz bonita.":
     "El Senso-ji a primera hora (abans de les 8) és gairebé buit i amb una llum preciosa.",
   "Este día cae en lunes: no hay Hokoten (la calle peatonal de Akihabara solo es los domingos). Si queréis pasearla sin coches, intercambiadlo con el del Fuji.":
-    "Aquest dia cau en dilluns: no hi ha Hokoten (el carrer de vianants d'Akihabara només és els diumenges). Si el voleu passejar sense cotxes, intercanvieu-lo amb el del Fuji.",
+    "Aquest dia cau en dilluns: no hi ha Hokoten (el carrer d'Akihabara només és de vianants els diumenges). Si el voleu passejar sense cotxes, intercanvieu-lo amb el del Fuji.",
   "Tren a Kioto y Gion": "Tren a Kyoto i Gion",
   "Hotel en Kioto (Karasuma)": "Hotel a Kyoto (Karasuma)",
   Kioto: "Kyoto",
@@ -166,7 +166,7 @@ const content: Record<string, string> = {
   "Arashiyama y Pabellón Dorado": "Arashiyama i Pavelló Daurat",
   Arashiyama: "Arashiyama",
   "Bosque de bambú": "Bosc de bambú",
-  "Antes de las 8 para tenerlo casi solo.": "Abans de les 8 per tenir-lo gairebé per a vosaltres sols.",
+  "Antes de las 8 para tenerlo casi solo.": "Abans de les 8 per gaudir-ne gairebé en solitari.",
   "Otagi Nenbutsu-ji": "Otagi Nenbutsu-ji",
   "1.200 estatuas rakan, cada una con su cara.": "1.200 estàtues rakan, cadascuna amb la seva cara.",
   "Fideos soba": "Fideus soba",
@@ -207,7 +207,7 @@ const content: Record<string, string> = {
   "En el formulario de Yamato poned la fecha de llegada al hotel de Tokio y el nombre de la reserva.":
     "Al formulari de Yamato poseu la data d'arribada a l'hotel de Tòquio i el nom de la reserva.",
   "Avisad al hotel de Tokio por email de que llegarán maletas antes que vosotros.":
-    "Aviseu l'hotel de Tòquio per correu que hi arribaran maletes abans que vosaltres.",
+    "Aviseu l'hotel de Tòquio per correu electrònic que hi arribaran maletes abans que vosaltres.",
   "En la mochila: 3 mudas, cargadores, neceser y ropa térmica para Takayama (~2 °C de noche).":
     "A la motxilla: 3 mudes, carregadors, necesser i roba tèrmica per a Takayama (~2 °C de nit).",
   "Resguardo Takkyubin": "Resguard Takkyubin",
@@ -285,7 +285,7 @@ const content: Record<string, string> = {
   "Entrada con franja horaria; el QR aparece en la web el mismo día. Se va descalzo y hay agua hasta la rodilla: pantalón que se remangue.":
     "Entrada amb franja horària; el QR apareix a la web el mateix dia. S'hi va descalç i hi ha aigua fins al genoll: pantalons que es puguin arremangar.",
   "precio dinámico": "preu dinàmic",
-  "Flagships de Ginza": "Flagships de Ginza",
+  "Flagships de Ginza": "Botigues emblemàtiques de Ginza",
   "Uniqlo, GU e Itoya (papelería).": "Uniqlo, GU i Itoya (papereria).",
   "Cena de yakiniku": "Sopar de yakiniku",
   "Muchos puestos de Tsukiji cierran a mediodía: id antes de las 10.":
@@ -311,20 +311,20 @@ const content: Record<string, string> = {
   "Santuario principal y calle de snacks.": "Santuari principal i carrer de snacks.",
   Hasedera: "Hasedera",
   "Arces en su punto a finales de noviembre y vistas a la bahía. Enoden de Kamakura a Hase.":
-    "Aurons en el seu punt a finals de novembre i vistes a la badia. Enoden de Kamakura a Hase.",
+    "Aurons al seu millor moment a finals de novembre i vistes a la badia. Enoden de Kamakura a Hase.",
   Enoden: "Enoden",
   "Gran Buda (Kotoku-in)": "Gran Buda (Kotoku-in)",
   "A 5 min a pie de Hasedera.": "A 5 min a peu de Hasedera.",
   "Vuelta a Shibuya": "Tornada a Shibuya",
   "Shonan-Shinjuku directo, ~1 h.": "Shonan-Shinjuku directe, ~1 h.",
   "Mega Don Quijote (tax free)": "Mega Don Quijote (tax free)",
-  "KitKats, souvenirs y cosmética.": "KitKats, souvenirs i cosmètica.",
+  "KitKats, souvenirs y cosmética.": "KitKats, records i cosmètica.",
   "Cena de despedida": "Sopar de comiat",
   "Hacer las maletas": "Fer les maletes",
   "Pesarlas (23 kg). Lo tax free va sellado: no abrirlo en Japón.":
-    "Pesar-les (23 kg). El tax free va segellat: no l'obriu al Japó.",
+    "Pesar-les (23 kg). Les compres tax free van segellades: no s'han d'obrir al Japó.",
   "En fin de semana Kamakura se llena: salid pronto. Si la cola del Enoden es larga, a Hase se llega andando en 25 min.":
-    "El cap de setmana Kamakura s'omple: sortiu d'hora. Si la cua de l'Enoden és llarga, a Hase s'hi arriba caminant en 25 min.",
+    "Els caps de setmana Kamakura s'omple: sortiu d'hora. Si la cua de l'Enoden és llarga, a Hase s'hi arriba a peu en 25 min.",
   "Tax free: llevar el pasaporte físico y comprar un mínimo de 5.000 ¥ por tienda.":
     "Tax free: portar el passaport físic i comprar un mínim de 5.000 ¥ per botiga.",
   "Vuelta a casa": "Tornada a casa",
@@ -344,7 +344,7 @@ const content: Record<string, string> = {
   "Tarjeta de embarque de vuelta": "Targeta d'embarcament de tornada",
   Ida: "Anada",
   "Narita T1": "Narita T1",
-  "Aerolínea · vuelo de ejemplo": "Aerolínia · vol d'exemple",
+  "Aerolínea · vuelo de ejemplo": "Companyia aèria · vol d'exemple",
   Vuelta: "Tornada",
   "Maletas con Takkyubin": "Maletes amb Takkyubin",
   "Se envían las maletas de Kioto al hotel final de Tokio y se viaja ligero 3 días por Miyajima y los Alpes.":
@@ -354,7 +354,7 @@ const content: Record<string, string> = {
     "S'instal·la a casa i s'activa en 2 minuts en aterrar, sense cues als taulells.",
   "Trenes con SmartEX": "Trens amb SmartEX",
   "Shinkansen comprados un mes antes desde casa con tarjeta. Reservad ventana para ver el Fuji.":
-    "Shinkansen comprats un mes abans des de casa amb targeta. Reserveu finestra per veure el Fuji.",
+    "Shinkansen comprats un mes abans des de casa amb targeta. Reserveu seient de finestra per veure el Fuji.",
   Efectivo: "Efectiu",
   "Yenes en cajeros de 7-Eleven con una tarjeta sin comisiones. Elegid siempre cobrar en yenes.":
     "Iens als caixers de 7-Eleven amb una targeta sense comissions. Trieu sempre cobrar en iens.",
@@ -386,12 +386,13 @@ const content: Record<string, string> = {
   "Comprar e instalar eSIM": "Comprar i instal·lar l'eSIM",
   "Añadir Suica al móvil": "Afegir la Suica al mòbil",
   "Japón 2027": "Japó 2027",
-  "Intenso: aprovechar el día (15.000–25.000 pasos)": "Intens: aprofitar el dia (15.000–25.000 passes)",
-  "1 bulto de mano + 1 maleta facturada (23 kg) por persona": "1 bossa de mà + 1 maleta facturada (23 kg) per persona",
+  "Intenso: aprovechar el día (15.000–25.000 pasos)": "Intens: aprofitar el dia (15.000–25.000 passos)",
+  "1 bulto de mano + 1 maleta facturada (23 kg) por persona":
+    "1 bagatge de mà + 1 maleta facturada (23 kg) per persona",
   "¡Bienvenidos!": "Benvinguts!",
   "Esta es la guía de nuestro viaje a Japón. Cada día encontraréis adónde vamos, qué veremos, las reservas y todo lo que hay que tener en cuenta.":
     "Aquesta és la guia del nostre viatge al Japó. Cada dia hi trobareu on anem, què veurem, les reserves i tot el que cal tenir en compte.",
-  "¡Que lo disfrutéis mucho!": "Que el gaudiu molt!",
+  "¡Que lo disfrutéis mucho!": "Que en gaudiu molt!",
   "¡Vamos!": "Som-hi!",
 };
 

@@ -20,7 +20,7 @@ export const m = defineMessages({
   },
   ca: {
     calendar: "Calendari",
-    calendarText: "Totes les parades del viatge al teu calendari, en hora del Japó i amb avís 30 minuts abans.",
+    calendarText: "Totes les parades del viatge al teu calendari, en hora del Japó i amb un avís 30 minuts abans.",
     calendarAdd: "Afegeix el viatge al calendari",
     flights: "Vols",
     and: " i ",
@@ -62,7 +62,7 @@ export const m = defineMessages({
     via: (code: string) => `via ${code}`,
     luggage: "Bagages",
     pace: "Rythme",
-    route: "Itinéraire",
+    route: "Parcours",
     days: (from: number, to: number) => `Jours ${from} à ${to}`,
     budget: "Budget par personne",
     budgetTotal: "total estimé",
