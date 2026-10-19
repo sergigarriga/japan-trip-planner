@@ -86,9 +86,9 @@ export function MonthView({ selected, todayIso, theme, onOpen }: Props) {
           <p className="muted">{t.summary(DAYS.length - 1, totalNights)}</p>
         </header>
 
-        <div className="cal" role="grid" aria-label={t.calendar}>
+        <div className="cal" role="group" aria-label={t.calendar}>
           {week().map((w, i) => (
-            <span key={i} className={`cal__wd${i >= 5 ? " is-weekend" : ""}`} role="columnheader">
+            <span key={i} className={`cal__wd${i >= 5 ? " is-weekend" : ""}`} aria-hidden="true">
               {w}
             </span>
           ))}
@@ -124,14 +124,13 @@ export function MonthView({ selected, todayIso, theme, onOpen }: Props) {
             return (
               <button
                 key={date}
-                role="gridcell"
                 data-block={day.block}
                 className={`cal__cell${day.n === preview ? " is-sel" : ""}${date === todayIso ? " is-today" : ""}`}
                 style={{ "--i": i } as React.CSSProperties}
                 onClick={() => setPreview(day.n)}
                 onDoubleClick={() => onOpen(day.n)}
                 aria-label={`${longDate(date)}: ${tc(day.title)}`}
-                aria-selected={day.n === preview}
+                aria-pressed={day.n === preview}
               >
                 <span className={`cal__num${weekend ? " is-weekend" : ""}`}>{d}</span>
                 <span className="cal__kanji">{day.kanji}</span>
@@ -176,10 +175,7 @@ export function MonthView({ selected, todayIso, theme, onOpen }: Props) {
         </ul>
       </section>
 
-      <article className="panel peek" data-block={previewDay.block} key={previewDay.n}>
-        <span className="peek__kanji" aria-hidden="true">
-          {previewDay.kanji}
-        </span>
+      <article className="panel peek" data-block={previewDay.block} data-kanji={previewDay.kanji} key={previewDay.n}>
         <p className="peek__meta">
           <span>{tc(previewBlock.name)}</span>
           {t.peekDate(previewDay.n, longDate(previewDay.date))}
