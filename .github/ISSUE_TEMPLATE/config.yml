@@ -1,0 +1,5 @@
+blank_issues_enabled: true
+contact_links:
+  - name: Cómo personalizar la guía
+    url: https://github.com/sergigarriga/japan-trip-planner/blob/main/docs/CUSTOMIZING.md
+    about: Antes de abrir un issue, mira si la guía de personalización responde tu duda.

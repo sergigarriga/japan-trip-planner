@@ -7,9 +7,19 @@ Guía de viaje a Japón día a día, pensada para el móvil y cómoda también e
 
 **Demo:** https://sergigarriga.github.io/japan-trip-planner/ (con un viaje de ejemplo de 19 días en otoño)
 
+<p align="center">
+  <img src="docs/screenshots/desktop-day.png" alt="Vista Día en escritorio" width="720">
+</p>
+<p align="center">
+  <img src="docs/screenshots/mobile-day.png" alt="Vista Día en el móvil (Sakura)" width="180">
+  <img src="docs/screenshots/mobile-trip.png" alt="Vista Viaje en el móvil (Andén)" width="180">
+  <img src="docs/screenshots/mobile-neon.png" alt="Vista Día en el móvil (Neón)" width="180">
+</p>
+
 ## Qué incluye
 
 - **Cuatro idiomas**: español, català, English y français. Se elige con el selector de la barra superior (o con `?idioma=ca|es|en|fr`) y, la primera vez, sigue el idioma del navegador.
+- **Sin conexión y instalable**: se guarda en el dispositivo (PWA) y funciona sin red; los mapas y el tiempo ya vistos también. Se puede añadir a la pantalla de inicio del móvil.
 - **Responsive**: una columna en el móvil y, en pantallas grandes, cartel y línea de días fijos a la izquierda con el detalle a la derecha.
 - **Día a día** con cartel de estación estilo JR, paradas con horario, precios en yenes y euros, ruta en Google Maps y consejos.
 - **Modo viaje**: siguiente parada con cuenta atrás, doble reloj (Japón y casa), conversor de yenes y pantalla siempre encendida.
@@ -20,7 +30,7 @@ Guía de viaje a Japón día a día, pensada para el móvil y cómoda también e
 - **Tareas** con fecha límite para ir reservando antes de salir.
 - **Frases en japonés** con voz y tarjeta para enseñar, y direcciones para el taxi.
 - **Tiempo**: previsión de Open-Meteo cuando faltan 15 días o menos y media histórica antes.
-- Exportación a **.ics** para cualquier calendario, búsqueda rápida (`/` o `Ctrl+K`), tres temas y diseño accesible.
+- Exportación a **.ics** para cualquier calendario, búsqueda rápida (`/` o `Ctrl+K`), tres temas y diseño accesible (contraste AA y comprobado con axe en los cuatro idiomas).
 
 ## Privacidad
 
@@ -54,19 +64,21 @@ La guía completa está en [docs/CUSTOMIZING.md](docs/CUSTOMIZING.md).
 3. En tu repositorio, ve a **Settings → Pages** y en _Source_ elige **GitHub Actions**.
 4. El flujo [`deploy.yml`](.github/workflows/deploy.yml) compila y publica la web en cada push a `main`, en `https://<tu-usuario>.github.io/<tu-repo>/`.
 
+Después, en `index.html`, cambia la URL de `og:image` por la de tu web (así se ve la imagen al compartir el enlace) y, si quieres, el icono de `public/`.
+
 La web usa rutas relativas, así que funciona igual en GitHub Pages, en un dominio propio o en cualquier hosting estático (copiando la carpeta `dist/`).
 
 ## Scripts
 
-| Comando           | Qué hace                                                 |
-| ----------------- | -------------------------------------------------------- |
-| `npm run dev`     | Servidor de desarrollo con recarga en caliente           |
-| `npm run build`   | Comprueba tipos y genera la web en `dist/`               |
-| `npm run preview` | Sirve la versión compilada para probarla                 |
-| `npm test`        | Tests de la lógica y validación de los datos del viaje   |
-| `npm run lint`    | ESLint (TypeScript y reglas de React)                    |
-| `npm run format`  | Formatea el código con Prettier                          |
-| `npm run check`   | Tipos, lint, formato y tests: lo mismo que ejecuta la CI |
+| Comando           | Qué hace                                                      |
+| ----------------- | ------------------------------------------------------------- |
+| `npm run dev`     | Servidor de desarrollo con recarga en caliente                |
+| `npm run build`   | Comprueba tipos y genera la web en `dist/`                    |
+| `npm run preview` | Sirve la versión compilada para probarla                      |
+| `npm test`        | Tests de la lógica, traducciones, componentes y accesibilidad |
+| `npm run lint`    | ESLint (TypeScript y reglas de React)                         |
+| `npm run format`  | Formatea el código con Prettier                               |
+| `npm run check`   | Tipos, lint, formato y tests: lo mismo que ejecuta la CI      |
 
 ## Estructura
 
@@ -82,18 +94,21 @@ src/
 ├── components/        vistas y componentes de React
 ├── state/             estado del viaje (plan editado, gastos, reservas…) guardado en el navegador
 ├── lib/               lógica pura: fechas, dinero, horarios, calendario .ics, mapas
+├── Root.tsx           arranque y cambio de idioma
 ├── hooks.ts           hooks compartidos (almacenamiento, reloj, wake lock, archivos)
 ├── db.ts              archivos en IndexedDB (fotos, QR, PDFs)
 └── styles.css         estilos y temas (Sakura, Andén, Neón)
+public/                iconos de la app e imagen para compartir el enlace
+docs/                  guías (personalizar, probar) y capturas
 ```
 
 ## Tecnología
 
-[React 18](https://react.dev/) + [TypeScript](https://www.typescriptlang.org/) estricto + [Vite](https://vite.dev/), con [Leaflet](https://leafletjs.com/) para el mapa. Sin backend ni claves de API: los mapas son de OpenStreetMap y el tiempo, de [Open-Meteo](https://open-meteo.com/).
+[React 18](https://react.dev/) + [TypeScript](https://www.typescriptlang.org/) estricto + [Vite](https://vite.dev/) (con [vite-plugin-pwa](https://vite-pwa-org.netlify.app/) para el modo sin conexión), [Leaflet](https://leafletjs.com/) para el mapa y [Vitest](https://vitest.dev/) con [axe-core](https://github.com/dequelabs/axe-core) para las pruebas. Sin backend ni claves de API: los mapas son de OpenStreetMap y el tiempo, de [Open-Meteo](https://open-meteo.com/).
 
 ## Contribuir
 
-Las mejoras son bienvenidas. Lee [CONTRIBUTING.md](CONTRIBUTING.md) antes de abrir un pull request.
+Las mejoras son bienvenidas. Lee [CONTRIBUTING.md](CONTRIBUTING.md) antes de abrir un pull request; `main` está protegida y se entra siempre por pull request con la CI en verde. Consulta también el [código de conducta](CODE_OF_CONDUCT.md) y la [política de seguridad](SECURITY.md). Los cambios de cada versión están en el [CHANGELOG](CHANGELOG.md).
 
 ## Licencia
 

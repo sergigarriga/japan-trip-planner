@@ -1,0 +1,15 @@
+name: Idea o mejora
+description: Propón algo nuevo
+labels: [enhancement]
+body:
+  - type: textarea
+    id: idea
+    attributes:
+      label: Qué te gustaría que hiciera
+    validations:
+      required: true
+  - type: textarea
+    id: why
+    attributes:
+      label: Para qué te serviría
+      description: Cuéntanos el caso de uso (viaje en pareja, en grupo, otro país…).

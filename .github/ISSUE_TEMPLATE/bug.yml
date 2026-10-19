@@ -1,0 +1,34 @@
+name: Error
+description: Algo no funciona como debería
+labels: [bug]
+body:
+  - type: textarea
+    id: what
+    attributes:
+      label: Qué ocurre
+      description: Describe el error y qué esperabas que pasara.
+    validations:
+      required: true
+  - type: textarea
+    id: steps
+    attributes:
+      label: Cómo reproducirlo
+      placeholder: |
+        1. Abre la pestaña…
+        2. Pulsa…
+    validations:
+      required: true
+  - type: input
+    id: device
+    attributes:
+      label: Dispositivo y navegador
+      placeholder: iPhone 15 con Safari 18, Windows con Chrome 130…
+  - type: dropdown
+    id: lang
+    attributes:
+      label: Idioma de la interfaz
+      options: [Español, Català, English, Français]
+  - type: textarea
+    id: extra
+    attributes:
+      label: Capturas o más información
