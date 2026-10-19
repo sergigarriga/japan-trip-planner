@@ -17,7 +17,7 @@
   --surface-solid: #ffffff;
   --hover: rgb(255 255 255 / 0.92);
   --ink: #2b2140;
-  --muted: #776b88;
+  --muted: #70647f;
   --rule: rgb(43 33 64 / 0.1);
   --warn: #d6336c;
   --warn-bg: rgb(255 227 236 / 0.85);
@@ -26,13 +26,13 @@
   --soon-ink: #8a5a00;
   --sign-bg: #ffffff;
   --sign-ink: #2b2140;
-  --sign-muted: #776b88;
+  --sign-muted: #70647f;
   --sign-shadow: 0 1px 0 rgb(43 33 64 / 0.06), 0 24px 50px -24px rgb(214 51 108 / 0.35);
   --kanji-glow: none;
   --bar-ink: #ffffff;
   --btn-bg: linear-gradient(115deg, #ff5f8f, #a05cff 60%, #5b8cff);
   --btn-ink: #ffffff;
-  --tabs-bg: rgb(255 255 255 / 0.78);
+  --tabs-bg: rgb(255 255 255 / 0.96);
   --tabs-border: rgb(239 79 125 / 0.22);
   --tabs-shadow: 0 14px 34px -14px rgb(214 51 108 / 0.45);
   --tabs-ink: #6b5a85;
@@ -41,10 +41,10 @@
   --swatch-1: #ff5f8f;
   --swatch-2: #a05cff;
   --swatch-3: #ffc94a;
-  --c-1: #ef4f7d;
-  --c-2: #8656f0;
-  --c-3: #0e9d8e;
-  --c-4: #ee7614;
+  --c-1: #c21244;
+  --c-2: #723aee;
+  --c-3: #0a7267;
+  --c-4: #a14f0c;
   color-scheme: light;
 }
 
@@ -55,7 +55,7 @@
   --surface-solid: #ffffff;
   --hover: #ffffff;
   --ink: #1d2126;
-  --muted: #676d74;
+  --muted: #62686f;
   --rule: #d6d9d3;
   --warn: #b3261e;
   --warn-bg: #fbeceb;
@@ -64,7 +64,7 @@
   --soon-ink: #8a5a00;
   --sign-bg: #ffffff;
   --sign-ink: #1d2126;
-  --sign-muted: #676d74;
+  --sign-muted: #62686f;
   --sign-shadow: 0 1px 0 #c9ccc6, 0 12px 28px -18px rgb(20 30 30 / 0.45);
   --kanji-glow: none;
   --bar-ink: #ffffff;
@@ -79,10 +79,10 @@
   --swatch-1: #3f9b52;
   --swatch-2: #8a4fa6;
   --swatch-3: #e0761a;
-  --c-1: #3f9b52;
-  --c-2: #8a4fa6;
-  --c-3: #0e8a8f;
-  --c-4: #d56c12;
+  --c-1: #2c6d39;
+  --c-2: #80499a;
+  --c-3: #0b6a6e;
+  --c-4: #954c0d;
   color-scheme: light;
 }
 
@@ -111,7 +111,7 @@
   --bar-ink: #0e0c18;
   --btn-bg: linear-gradient(115deg, #ff4fa3, #7b5cff);
   --btn-ink: #ffffff;
-  --tabs-bg: rgb(27 24 48 / 0.82);
+  --tabs-bg: rgb(27 24 48 / 0.95);
   --tabs-border: rgb(255 255 255 / 0.12);
   --tabs-shadow: 0 14px 34px -12px rgb(255 79 163 / 0.4);
   --tabs-ink: #a8a0c6;
@@ -1869,6 +1869,7 @@ a {
 }
 
 [data-theme="anden"] .budget__total {
+  background: none;
   color: var(--ink);
 }
 
@@ -2256,7 +2257,6 @@ a {
 
 .cal__cell.is-off .cal__num {
   color: var(--muted);
-  opacity: 0.6;
 }
 
 .cal__cell.is-return {
@@ -2404,11 +2404,10 @@ a {
     overflow: hidden;
     font-size: 0.6875rem;
     line-height: 1.25;
-    color: var(--muted);
+    color: var(--ink);
   }
   .cal__cell.is-sel .cal__title {
     color: var(--bar-ink);
-    opacity: 0.85;
   }
   .mk {
     width: 18px;
@@ -2462,7 +2461,8 @@ a {
   animation: now-in 450ms var(--spring) both;
 }
 
-.peek__kanji {
+.peek::after {
+  content: attr(data-kanji);
   position: absolute;
   right: 6px;
   bottom: -12px;
@@ -2501,7 +2501,7 @@ a {
   text-wrap: balance;
 }
 
-.peek > :not(.peek__kanji) {
+.peek > * {
   position: relative;
   z-index: 1;
 }
@@ -4756,4 +4756,40 @@ html.has-full-sheet dialog[open] {
   .petals {
     display: none;
   }
+}
+
+/* =========================================================
+   Pantalla de error (ErrorBoundary)
+   ========================================================= */
+.crash {
+  display: grid;
+  gap: 14px;
+  justify-items: start;
+  max-width: 34rem;
+  margin: 12dvh auto 0;
+  padding: 0 var(--gutter-l, 16px);
+}
+
+.crash h1 {
+  font-size: 1.5rem;
+}
+
+.crash p,
+.crash summary {
+  color: var(--muted);
+}
+
+.crash pre {
+  max-width: 100%;
+  overflow: auto;
+  padding: 10px 12px;
+  border-radius: var(--radius-sm);
+  background: color-mix(in srgb, var(--ink) 6%, transparent);
+  font-size: 0.8125rem;
+  white-space: pre-wrap;
+}
+
+/* Neón: los colores de bloque son claros, así que el texto sobre ellos va oscuro para mantener el contraste */
+[data-theme="neon"] .mapdot {
+  color: #0e0c18;
 }
